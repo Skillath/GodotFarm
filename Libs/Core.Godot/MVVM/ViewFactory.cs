@@ -1,4 +1,5 @@
 ﻿using Core.MVVM;
+using Core.Observable;
 using Godot;
 
 namespace Core.Godot.MVVM;
@@ -6,38 +7,32 @@ namespace Core.Godot.MVVM;
 public sealed class ViewFactory : IViewFactory
 {
     private readonly IViewCollection _viewCollection;
-    private readonly IServiceProvider _serviceProvider;
+    private readonly IDependencyResolver _dependencyResolver;
 
     public ViewFactory(
         IViewCollection viewCollection,
-        IServiceProvider serviceProvider)
+        IDependencyResolver dependencyResolver)
     {
         _viewCollection = viewCollection;
-        _serviceProvider = serviceProvider;
+        _dependencyResolver = dependencyResolver;
     }
 
     public IView CreateView<TViewModel>() 
         where TViewModel : IViewModel
     {
-        throw new NotImplementedException();
+        var viewTemplate = _viewCollection.GetView<TViewModel>();
+        if (viewTemplate is null)
+            throw new Exception();
+
+        var view = viewTemplate.Instantiate<IView>();
+        _dependencyResolver.ResolveDependencies(view);
+        return view;
+
     }
 
     public void DestroyView(IView view)
     {
-        throw new NotImplementedException();
-    }
-}
-
-public abstract class ViewCollectionBase : IViewCollection
-{
-    private readonly Dictionary<Type, PackedScene> _views = new();
-    
-    public PackedScene? GetView<TViewModel>() 
-        where TViewModel : IViewModel
-    {
-        if (!_views.TryGetValue(typeof(TViewModel), out var packedScene))
-            return null;
-
-        return packedScene;
+        var node = (Node)view;
+        node.Free();
     }
 }

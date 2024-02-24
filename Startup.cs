@@ -1,5 +1,6 @@
 ﻿using Core.Godot.MVVM;
 using Core.MVVM;
+using Core.Observable;
 using Core.Task;
 using Godot;
 using Microsoft.Extensions.Configuration;
@@ -56,6 +57,7 @@ public sealed partial class Startup : Node
     private void ConfigureServices(IServiceCollection services)
     {
         services.AddSingleton<Application>();
+        services.AddSingleton<IDependencyResolver, DependencyResolver>();
         services.AddSingleton<IViewFactory, ViewFactory>();
     }
 }
