@@ -1,4 +1,5 @@
-﻿using Core.MVVM;
+﻿using Core.DependencyInjection;
+using Core.MVVM;
 using Core.Observable;
 using Godot;
 

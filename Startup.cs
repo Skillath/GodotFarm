@@ -1,4 +1,5 @@
-﻿using Core.Godot.MVVM;
+﻿using Core.DependencyInjection;
+using Core.Godot.MVVM;
 using Core.MVVM;
 using Core.Observable;
 using Core.Task;

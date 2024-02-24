@@ -1,4 +1,4 @@
-﻿namespace Core.Observable;
+﻿namespace Core.DependencyInjection;
 
 public interface IDependencyResolver
 {
