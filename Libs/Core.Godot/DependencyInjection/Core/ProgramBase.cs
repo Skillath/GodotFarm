@@ -2,6 +2,7 @@
 using Core.DependencyInjection.Core;
 using Core.DependencyInjection.Exceptions;
 using Core.DependencyInjection.Host.Extensions;
+using Core.Godot.Logging;
 using Godot;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
@@ -22,13 +23,19 @@ public abstract partial class ProgramBase : Node, IProgram
             //.ConfigureServices(s => s.AddSingleton<IFactory<GameObject>, GameObjectFactory>())
             .ConfigureServices(ConfigureServices)
             .Configure(Configure)
-            //.ConfigureLogging(l => l.AddUnityLoggers())
+            .ConfigureLogging(l => l.AddGodotLoggers())
             .BuildAndRunConfigurableHostAsync(CancellationTokenSource.Token);
 
         if (Host is null)
             throw new DependencyInjectionException($"Error trying to build IHost. Maybe there is an error creating the IHostBuilder.");
     }
-    
+
+    public override void _ExitTree()
+    {
+        CancellationTokenSource.Cancel(false);
+        base._ExitTree();
+    }
+
     public abstract IHostBuilder CreateHostBuilder();
 
     protected virtual void BeforeDestroy()

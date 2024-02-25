@@ -46,10 +46,8 @@ namespace Core.DependencyInjection.Host.Extensions
         public static IHostBuilder Configure(this IHostBuilder hostBuilder, Action<IApplicationBuilder, IHostEnvironment> configure)
         {
             if (hostBuilder is not IConfigurable configurable)
-            {
                 throw new DependencyInjectionException($"You only can use the {nameof(Configure)} method on a {nameof(IConfigurable)} {nameof(IHostBuilder)}");
-            }
-
+            
             configurable.AddConfigure(configure);
 
             return hostBuilder;
