@@ -1,6 +1,6 @@
-<Project Sdk="Godot.NET.Sdk/4.2.1">
+<Project Sdk="Godot.NET.Sdk/4.1.2">
   <PropertyGroup>
-    <TargetFramework>net8.0</TargetFramework>
+    <TargetFramework>net6.0</TargetFramework>
     <EnableDynamicLoading>true</EnableDynamicLoading>
     <Nullable>enable</Nullable>
     <ImplicitUsings>true</ImplicitUsings>
@@ -12,12 +12,15 @@
     <PackageReference Include="Microsoft.Extensions.Hosting" Version="8.0.0" />
     <PackageReference Include="Microsoft.Extensions.Logging.Abstractions" Version="8.0.0" />
   </ItemGroup>
+
   <ItemGroup>
     <Compile Remove="Libs\**" />
   </ItemGroup>
+
   <ItemGroup>
     <EmbeddedResource Remove="Libs\**" />
   </ItemGroup>
+
   <ItemGroup>
     <ProjectReference Include="Libs\Core.Godot\Core.Godot.csproj" />
     <ProjectReference Include="Libs\Core\Core.csproj" />
