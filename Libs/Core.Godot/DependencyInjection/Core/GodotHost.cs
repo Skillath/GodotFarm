@@ -8,7 +8,7 @@ namespace Core.Godot.DependencyInjection.Core;
 public static class GodotHost
 {
     public static IHostBuilder CreateDefaultBuilder() =>
-        CreateDefaultBuilder(args: null, directory: null);
+        CreateDefaultBuilder(args: Array.Empty<string>(), directory: string.Empty);
 
     public static IHostBuilder CreateDefaultBuilder(string[] args, string directory)
     {

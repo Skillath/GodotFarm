@@ -15,15 +15,20 @@ public sealed class ObservableProperty<TValue>
     public ObservableProperty() : this(default!)
     {
     }
-    
+
     public ObservableProperty(TValue value)
     {
         _value = value;
     }
-    
+
     private void SetValue(ref TValue value)
     {
         _value = value;
         OnValueChanged.Invoke(value);
+    }
+    
+    private void SetValueWithoutNotifying(ref TValue value)
+    {
+        _value = value;
     }
 }

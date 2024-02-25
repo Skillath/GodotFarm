@@ -5,6 +5,8 @@
     <Nullable>enable</Nullable>
     <ImplicitUsings>true</ImplicitUsings>
     <LangVersion>latest</LangVersion>
+    <!-- Use NativeAOT. -->
+    <PublishAOT>true</PublishAOT>
   </PropertyGroup>
   <ItemGroup>
     <PackageReference Include="JetBrains.Annotations" Version="2023.3.0" />
@@ -21,5 +23,11 @@
   <ItemGroup>
     <ProjectReference Include="Libs\Core.Godot\Core.Godot.csproj" />
     <ProjectReference Include="Libs\Core\Core.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <!-- Root the assemblies to avoid trimming. -->
+    <TrimmerRootAssembly Include="GodotSharp" />
+    <TrimmerRootAssembly Include="$(TargetName)" />
   </ItemGroup>
 </Project>

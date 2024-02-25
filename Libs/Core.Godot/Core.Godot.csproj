@@ -5,6 +5,8 @@
         <Nullable>enable</Nullable>
         <ImplicitUsings>true</ImplicitUsings>
         <LangVersion>latest</LangVersion>
+        <!-- Use NativeAOT. -->
+        <PublishAOT>true</PublishAOT>
     </PropertyGroup>
 
     <ItemGroup>
@@ -14,6 +16,12 @@
     <ItemGroup>
       <PackageReference Include="Microsoft.Extensions.Logging" Version="8.0.0" />
       <PackageReference Include="Microsoft.Extensions.Logging.Abstractions" Version="8.0.0" />
+    </ItemGroup>
+
+    <ItemGroup>
+        <!-- Root the assemblies to avoid trimming. -->
+        <TrimmerRootAssembly Include="GodotSharp" />
+        <TrimmerRootAssembly Include="$(TargetName)" />
     </ItemGroup>
 
 </Project>

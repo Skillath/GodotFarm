@@ -19,9 +19,5 @@
         <PackageReference Include="Strongly" Version="1.5.1"  PrivateAssets="all" />
         <PackageReference Include="JetBrains.Annotations" Version="2023.3.0" />
     </ItemGroup>
-
-    <ItemGroup>
-      <Folder Include="DependencyInjection\" />
-    </ItemGroup>
     
 </Project>

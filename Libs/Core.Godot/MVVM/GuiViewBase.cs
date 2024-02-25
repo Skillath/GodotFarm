@@ -21,10 +21,10 @@ public abstract partial class GuiViewBase<TViewModel> : Control, IView
     {
         ViewModel = viewModel;
     }
-    
-    public override void _Ready()
+
+    public override void _EnterTree()
     {
-        base._Ready();
+        base._EnterTree();
         Bind();
     }
 

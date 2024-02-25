@@ -3,11 +3,11 @@ using Godot;
 
 namespace Core.Godot.MVVM;
 
-public abstract class ViewCollectionBase : IViewCollection
+public abstract partial class ViewCollectionBase : Resource, IViewCollection
 {
     private readonly Dictionary<Type, PackedScene> _views = new();
-    
-    public PackedScene? GetView<TViewModel>() 
+
+    public PackedScene? GetView<TViewModel>()
         where TViewModel : IViewModel
     {
         if (!_views.TryGetValue(typeof(TViewModel), out var packedScene))

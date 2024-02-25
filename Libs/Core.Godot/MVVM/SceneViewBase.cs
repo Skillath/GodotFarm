@@ -31,9 +31,9 @@ public abstract partial class SceneViewBase<TViewModel> : Node3D, IView
 
     public override void _ExitTree()
     {
-        _cancellationTokenSource.Cancel();
         BeforeDestroy();
         base._ExitTree();
+        _cancellationTokenSource.Cancel();
     }
 
     protected abstract void Bind();
