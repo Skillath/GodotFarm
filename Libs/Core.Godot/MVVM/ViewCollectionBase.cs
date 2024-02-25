@@ -11,7 +11,9 @@ public abstract class ViewCollectionBase : IViewCollection
         where TViewModel : IViewModel
     {
         if (!_views.TryGetValue(typeof(TViewModel), out var packedScene))
+        {
             return null;
+        }
 
         return packedScene;
     }

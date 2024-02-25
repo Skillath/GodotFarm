@@ -1,4 +1,5 @@
 ﻿using Core.DependencyInjection;
+using Core.DependencyInjection.ServiceResolver;
 using Core.MVVM;
 using Core.Observable;
 using Godot;
@@ -8,11 +9,11 @@ namespace Core.Godot.MVVM;
 public sealed class ViewFactory : IViewFactory
 {
     private readonly IViewCollection _viewCollection;
-    private readonly IDependencyResolver _dependencyResolver;
+    private readonly IServiceResolver _dependencyResolver;
 
     public ViewFactory(
         IViewCollection viewCollection,
-        IDependencyResolver dependencyResolver)
+        IServiceResolver dependencyResolver)
     {
         _viewCollection = viewCollection;
         _dependencyResolver = dependencyResolver;
@@ -26,7 +27,7 @@ public sealed class ViewFactory : IViewFactory
             throw new Exception();
 
         var view = viewTemplate.Instantiate<IView>();
-        _dependencyResolver.ResolveDependencies(view);
+        _dependencyResolver.Resolve(view);
         return view;
 
     }
