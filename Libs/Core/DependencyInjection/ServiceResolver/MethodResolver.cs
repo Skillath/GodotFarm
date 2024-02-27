@@ -1,8 +1,10 @@
 ﻿using System.Reflection;
 using Core.DependencyInjection.Exceptions;
+using JetBrains.Annotations;
 
 namespace Core.DependencyInjection.ServiceResolver;
 
+[UsedImplicitly]
 public sealed class MethodResolver : MemberResolverBase
 {
     public MethodResolver(IServiceProvider serviceProvider) : base(serviceProvider)

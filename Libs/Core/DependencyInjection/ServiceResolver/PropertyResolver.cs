@@ -1,9 +1,11 @@
 ﻿using System.Reflection;
 using System.Runtime.CompilerServices;
 using Core.DependencyInjection.Exceptions;
+using JetBrains.Annotations;
 
 namespace Core.DependencyInjection.ServiceResolver;
 
+[UsedImplicitly]
 public sealed class PropertyResolver : MemberResolverBase
 {
     private const string BackingFieldName = "<{0}>k__BackingField";

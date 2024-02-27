@@ -5,6 +5,6 @@ namespace RealFriendlyFarm.Assets;
 
 public sealed partial class GameViewCollection : ViewCollectionBase
 {
-    [Export] 
-    private CharacterView _characterView = default!;
+    // [Export] 
+    // private CharacterView _characterView = default!;
 }

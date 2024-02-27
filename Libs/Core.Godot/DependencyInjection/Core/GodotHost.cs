@@ -14,8 +14,8 @@ public static class GodotHost
     {
         var hostBuilder = new ConfigurableHostBuilder()
             //.WithDefaultGameObjectFactory()
-            .ConfigureLogging(logger => 
-                logger.ClearProviders().AddGodotLoggers());
+             .ConfigureLogging(logger => 
+                 logger.ClearProviders().AddGodotLoggers());
 
         //TODO: Add support for appsettings.json and so on
 

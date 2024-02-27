@@ -5,8 +5,6 @@
         <ImplicitUsings>enable</ImplicitUsings>
         <Nullable>enable</Nullable>
         <LangVersion>latest</LangVersion>
-        <!--  Define the MSBuild constant to preserve usages   -->
-        <DefineConstants>STRONGLY_TYPED_USAGES</DefineConstants>
     </PropertyGroup>
 
     <ItemGroup>
@@ -16,7 +14,6 @@
         <PackageReference Include="Microsoft.Extensions.Hosting" Version="8.0.0" />
         <PackageReference Include="Microsoft.Extensions.Hosting.Abstractions" Version="8.0.0" />
         <PackageReference Include="Microsoft.Extensions.Logging.Abstractions" Version="8.0.0" />
-        <PackageReference Include="Strongly" Version="1.5.1"  PrivateAssets="all" />
         <PackageReference Include="JetBrains.Annotations" Version="2023.3.0" />
     </ItemGroup>
     

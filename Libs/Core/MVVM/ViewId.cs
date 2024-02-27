@@ -1,8 +1,6 @@
-﻿using Strongly;
+﻿namespace Core.MVVM;
 
-namespace Core.MVVM;
-
-[Strongly(converters:StronglyConverter.None)]
-public readonly partial struct ViewId
+public readonly record struct ViewId(Guid Value)
 {
+    public static ViewId Create() => new ViewId(Guid.NewGuid());
 }

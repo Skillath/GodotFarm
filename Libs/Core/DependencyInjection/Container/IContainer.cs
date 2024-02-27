@@ -2,12 +2,11 @@
 using Microsoft.Extensions.DependencyInjection;
 using IHostEnvironment = Microsoft.Extensions.Hosting.IHostEnvironment;
 
-namespace Core.DependencyInjection.Container
-{
-    public interface IContainer : IDisposable
-    {
-        void ConfigureServices(IServiceCollection serviceCollection);
+namespace Core.DependencyInjection.Container;
 
-        void Configure(IApplicationBuilder app, IHostEnvironment env);
-    }
+public interface IContainer : IDisposable
+{
+    void ConfigureServices(IServiceCollection serviceCollection);
+
+    void Configure(IApplicationBuilder app, IHostEnvironment env);
 }

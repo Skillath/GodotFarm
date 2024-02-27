@@ -10,7 +10,7 @@ public abstract partial class SceneViewBase<TViewModel> : Node3D, IView
 {
     private readonly CancellationTokenSource _cancellationTokenSource = new();
     
-    public ViewId Id { get; } = ViewId.New();
+    public ViewId Id { get; } = ViewId.Create();
     
     protected TViewModel ViewModel { get; private set; } = default!;
 

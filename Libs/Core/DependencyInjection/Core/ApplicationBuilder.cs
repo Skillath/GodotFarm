@@ -1,12 +1,11 @@
-﻿namespace Core.DependencyInjection.Core
-{
-    public class ApplicationBuilder : IApplicationBuilder
-    {
-        public IServiceProvider ApplicationServices { get; }
+﻿namespace Core.DependencyInjection.Core;
 
-        public ApplicationBuilder(IServiceProvider applicationServices)
-        {
-            ApplicationServices = applicationServices;
-        }
+public class ApplicationBuilder : IApplicationBuilder
+{
+    public IServiceProvider ApplicationServices { get; }
+
+    public ApplicationBuilder(IServiceProvider applicationServices)
+    {
+        ApplicationServices = applicationServices;
     }
 }

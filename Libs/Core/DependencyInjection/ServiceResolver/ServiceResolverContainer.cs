@@ -5,36 +5,35 @@ using Core.DependencyInjection.ServiceResolver.Extensions;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 
-namespace Core.DependencyInjection.ServiceResolver
+namespace Core.DependencyInjection.ServiceResolver;
+
+public sealed class ServiceResolverContainer : IContainer
 {
-    public sealed class ServiceResolverContainer : IContainer
+    private IApplicationBuilder? _app;
+
+    public void ConfigureServices(IServiceCollection serviceCollection)
     {
-        private IApplicationBuilder? _app;
+        serviceCollection.UseServiceResolver();
 
-        public void ConfigureServices(IServiceCollection serviceCollection)
-        {
-            serviceCollection.UseServiceResolver();
+        serviceCollection.RegisterResolver<FieldResolver>();
+        serviceCollection.RegisterResolver<PropertyResolver>();
+        serviceCollection.RegisterResolver<MethodResolver>();
+        serviceCollection.RegisterResolver<ConstructorResolver>();
+    }
 
-            serviceCollection.RegisterResolver<FieldResolver>();
-            serviceCollection.RegisterResolver<PropertyResolver>();
-            serviceCollection.RegisterResolver<MethodResolver>();
-            serviceCollection.RegisterResolver<ConstructorResolver>();
-        }
+    public void Configure(IApplicationBuilder app, IHostEnvironment _)
+    {
+        _app = app 
+               ?? throw new ArgumentNullException(nameof(app));
 
-        public void Configure(IApplicationBuilder app, IHostEnvironment _)
-        {
-            _app = app 
-                ?? throw new ArgumentNullException(nameof(app));
+        app.UseResolver<FieldResolver>(MemberTypes.Field);
+        app.UseResolver<PropertyResolver>(MemberTypes.Property);
+        app.UseResolver<MethodResolver>(MemberTypes.Method);
+        app.UseResolver<ConstructorResolver>(MemberTypes.Constructor);
+    }
 
-            app.UseResolver<FieldResolver>(MemberTypes.Field);
-            app.UseResolver<PropertyResolver>(MemberTypes.Property);
-            app.UseResolver<MethodResolver>(MemberTypes.Method);
-            app.UseResolver<ConstructorResolver>(MemberTypes.Constructor);
-        }
-
-        public void Dispose()
-        {
-            _app?.ClearServiceResolver();
-        }
+    public void Dispose()
+    {
+        _app?.ClearServiceResolver();
     }
 }

@@ -6,7 +6,7 @@
     <ImplicitUsings>true</ImplicitUsings>
     <LangVersion>latest</LangVersion>
     <!-- Use NativeAOT. -->
-    <PublishAOT>true</PublishAOT>
+<!--    <PublishAOT>true</PublishAOT>-->
   </PropertyGroup>
   <ItemGroup>
     <PackageReference Include="JetBrains.Annotations" Version="2023.3.0" />
@@ -27,7 +27,7 @@
 
   <ItemGroup>
     <!-- Root the assemblies to avoid trimming. -->
-    <TrimmerRootAssembly Include="GodotSharp" />
-    <TrimmerRootAssembly Include="$(TargetName)" />
+<!--    <TrimmerRootAssembly Include="GodotSharp" />-->
+<!--    <TrimmerRootAssembly Include="$(TargetName)" />-->
   </ItemGroup>
 </Project>

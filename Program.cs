@@ -8,8 +8,11 @@ public sealed partial class Program : ProgramBase
 {
     public override IHostBuilder CreateHostBuilder()
     {
-        return GodotHost.CreateDefaultBuilder()
+        var hostBuilder = GodotHost
+            .CreateDefaultBuilder()
             .UseHostedService<GameHostedService>()
             .UseStartup<Startup>();
+
+        return hostBuilder;
     }
 }

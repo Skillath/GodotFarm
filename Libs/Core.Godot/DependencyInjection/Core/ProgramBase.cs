@@ -20,10 +20,8 @@ public abstract partial class ProgramBase : Node, IProgram
         base._EnterTree();
         
         Host = CreateHostBuilder()
-            //.ConfigureServices(s => s.AddSingleton<IFactory<GameObject>, GameObjectFactory>())
             .ConfigureServices(ConfigureServices)
             .Configure(Configure)
-            .ConfigureLogging(l => l.AddGodotLoggers())
             .BuildAndRunConfigurableHostAsync(CancellationTokenSource.Token);
 
         if (Host is null)
@@ -50,19 +48,19 @@ public abstract partial class ProgramBase : Node, IProgram
     
     private static void ConfigureServices(IServiceCollection serviceProvider)
     {
-            
+        
     }
 
     private static void Configure(IApplicationBuilder app, IHostEnvironment env)
     {
         var startup = app.ApplicationServices.GetRequiredService<IStartup>();
-        var hostedService = app.ApplicationServices.GetRequiredService<IEnumerable<IHostedService>>();
+        var hostedServices = app.ApplicationServices.GetServices<IHostedService>();
         var containerCollection = app.ApplicationServices.GetRequiredService<IContainerCollection>();
 
         if (startup is null)
             throw new DependencyInjectionException("IStartup object required!");
 
-        if (hostedService is null || !hostedService.Any())
+        if (hostedServices is null || !hostedServices.Any())
             throw new DependencyInjectionException("IHostedService object required!");
 
         startup.Configure(app, env);
