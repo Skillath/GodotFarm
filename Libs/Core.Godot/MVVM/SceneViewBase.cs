@@ -1,5 +1,4 @@
-﻿using Core.DependencyInjection;
-using Core.DependencyInjection.Core.Attributes;
+﻿using Core.DependencyInjection.Core.Attributes;
 using Core.MVVM;
 using Godot;
 
@@ -9,9 +8,9 @@ public abstract partial class SceneViewBase<TViewModel> : Node3D, IView
     where TViewModel : IViewModel
 {
     private readonly CancellationTokenSource _cancellationTokenSource = new();
-    
+
     public ViewId Id { get; } = ViewId.Create();
-    
+
     protected TViewModel ViewModel { get; private set; } = default!;
 
     protected CancellationToken CancellationToken => _cancellationTokenSource.Token;
@@ -22,9 +21,9 @@ public abstract partial class SceneViewBase<TViewModel> : Node3D, IView
         ViewModel = viewModel;
     }
     
-    public override void _Ready()
+    public override void _EnterTree()
     {
-        base._Ready();
+        base._EnterTree();
 
         Bind();
     }

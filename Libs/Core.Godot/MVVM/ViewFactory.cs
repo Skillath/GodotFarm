@@ -26,9 +26,9 @@ public sealed class ViewFactory : IViewFactory
         if (viewTemplate is null)
             throw new Exception($"Couldn't find view for ViewModel {nameof(TViewModel)}");
         
-        var view = viewTemplate.Instantiate<IView>();
-        _dependencyResolver.Resolve(view);
-        return view;
+        var node = viewTemplate.Instantiate();
+        _dependencyResolver.Resolve(node);
+        return (IView)node;
     }
 
     public void DestroyView(IView view)

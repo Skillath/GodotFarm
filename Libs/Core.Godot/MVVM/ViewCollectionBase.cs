@@ -1,19 +1,25 @@
-﻿using Core.MVVM;
+﻿using Core.Godot.DependencyInjection.Container;
+using Core.MVVM;
 using Godot;
 
 namespace Core.Godot.MVVM;
 
-public abstract partial class ViewCollectionBase : Resource, IViewCollection
+public abstract class ViewCollectionBase : IViewCollection
 {
     private readonly Dictionary<Type, PackedScene> _views = new();
 
-    public PackedScene? GetView<TViewModel>()
+    public void RegisterView<TView, TViewModel>(PackedView<TView> view) 
+        where TView : Node, IView 
+        where TViewModel : IViewModel
+    {
+        _views.Add(typeof(TViewModel), view);
+    }
+
+    public PackedScene GetView<TViewModel>()
         where TViewModel : IViewModel
     {
         if (!_views.TryGetValue(typeof(TViewModel), out var packedScene))
-        {
-            return null;
-        }
+            throw new Exception($"View for {nameof(TViewModel)} not found");
 
         return packedScene;
     }

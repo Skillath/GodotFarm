@@ -1,10 +1,10 @@
 ﻿using Core.Godot.MVVM;
-using Godot;
+using JetBrains.Annotations;
 
 namespace RealFriendlyFarm.Assets;
 
-public sealed partial class GameViewCollection : ViewCollectionBase
+[UsedImplicitly]
+public sealed class GameViewCollection : ViewCollectionBase
 {
-    // [Export] 
-    // private CharacterView _characterView = default!;
+    
 }

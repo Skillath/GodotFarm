@@ -34,6 +34,7 @@ public static class TaskExtension
             {
                 // Nothing to do here
                 logger?.LogError("{Error}", e.ToString());
+                Console.WriteLine("{Error}", e.ToString());
             }
         }
     }

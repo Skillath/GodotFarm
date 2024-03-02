@@ -9,10 +9,10 @@ public abstract partial class GuiViewBase<TViewModel> : Control, IView
     where TViewModel : IViewModel
 {
     private readonly CancellationTokenSource _cancellationTokenSource = new();
-    
+
     public ViewId Id { get; } = ViewId.Create();
 
-    protected TViewModel ViewModel { get; private set; } = default!;
+    protected TViewModel? ViewModel { get; private set; }
 
     protected CancellationToken CancellationToken => _cancellationTokenSource.Token;
 

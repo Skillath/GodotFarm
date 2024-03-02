@@ -33,8 +33,8 @@ public static class HostBuilderExtensions
             containerCollection.ConfigureServices(services);
             startup.ConfigureServices(services);
 
-            hostBuilder.Configure(containerCollection.Configure);
-            hostBuilder.Configure(startup.Configure);
+            // hostBuilder.Configure(containerCollection.Configure);
+            // hostBuilder.Configure(startup.Configure);
         });
     }
 
@@ -60,7 +60,7 @@ public static class HostBuilderExtensions
     {
         var host = hostBuilder.BuildConfigurableHost();
 
-        Task.Run(() => host.RunAsync(cancellationToken), cancellationToken).Forget();
+        host.RunAsync(cancellationToken).Forget();
 
         return host;
     }

@@ -1,0 +1,17 @@
+[gd_scene load_steps=3 format=3 uid="uid://dwcw4tq4rc53d"]
+
+[ext_resource type="Script" path="res://Assets/CharacterView.cs" id="1_gnj0a"]
+
+[sub_resource type="SphereMesh" id="SphereMesh_8v345"]
+
+[node name="CharacterView" type="Node3D"]
+script = ExtResource("1_gnj0a")
+
+[node name="Camera3D" type="Camera3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 0.831954, 0.554844, 0, -0.554844, 0.831954, 0, 0.862833, 1.33259)
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 0.3092, 0.950997, 0, -0.950997, 0.3092, 0, 0.336807, 0)
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+mesh = SubResource("SphereMesh_8v345")

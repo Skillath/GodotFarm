@@ -13,6 +13,7 @@ public sealed class ServiceResolverContainer : IContainer
 
     public void ConfigureServices(IServiceCollection serviceCollection)
     {
+        serviceCollection.AddSingleton<IServiceResolver, CustomAttributeServiceResolver>();
         serviceCollection.UseServiceResolver();
 
         serviceCollection.RegisterResolver<FieldResolver>();

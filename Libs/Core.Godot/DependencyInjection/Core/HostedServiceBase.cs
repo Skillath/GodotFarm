@@ -17,7 +17,10 @@ public abstract class HostedServiceBase : IHostedService
     {
         using (_appLifetime.ApplicationStarted.Register(OnStarted))
         using (_appLifetime.ApplicationStopping.Register(OnStopping))
-        using (_appLifetime.ApplicationStopped.Register(OnStopped)) { }
+        using (_appLifetime.ApplicationStopped.Register(OnStopped))
+        {
+            //Does this even work?
+        }
 
         return Task.CompletedTask;
     }
