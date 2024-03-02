@@ -28,6 +28,7 @@ public sealed class ViewFactory : IViewFactory
         
         var node = viewTemplate.Instantiate();
         _dependencyResolver.Resolve(node);
+        
         return (IView)node;
     }
 

@@ -63,4 +63,12 @@ public abstract partial class ProgramBase : Node, IProgram
         startup.Configure(app, env);
         containerCollection.Configure(app, env);
     }
+
+    public override void _Notification(int what)
+    {
+        if (what == NotificationWMCloseRequest)
+        {
+            CancellationTokenSource.CancelAsync().Forget();
+        } // default behavior
+    }
 }

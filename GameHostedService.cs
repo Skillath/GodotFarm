@@ -1,5 +1,6 @@
 ﻿using Core.Godot.DependencyInjection.Core;
 using Core.MVVM;
+using Godot;
 using JetBrains.Annotations;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
@@ -33,7 +34,7 @@ public sealed class GameHostedService : HostedServiceAsyncBase, IHostedService
         _logger.LogCritical("Critical");
 
         var view = _factory.CreateView<CharacterViewModel>();
-        
+        var id = view.Id;
         
     }
 

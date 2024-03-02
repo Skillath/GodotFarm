@@ -16,7 +16,7 @@ public abstract partial class SceneViewBase<TViewModel> : Node3D, IView
     protected CancellationToken CancellationToken => _cancellationTokenSource.Token;
     
     [Inject]
-    private void ConstructBase(TViewModel viewModel)
+    protected void ConstructBase(TViewModel viewModel)
     {
         ViewModel = viewModel;
     }

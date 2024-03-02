@@ -28,8 +28,10 @@ public sealed class CustomAttributeServiceResolver : IServiceResolver
         var type = context.GetType();
         if (!_cachedResolvers.TryGetValue(type, out var resolvers))
         {
-            resolvers = context.GetType().GetMembers(BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance)
-                .Where(member => member.GetCustomAttribute<InjectAttribute>() is not null || member.MemberType.HasFlag(MemberTypes.Constructor))
+            resolvers = context
+                .GetType()
+                .GetMembers(BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance | BindingFlags.FlattenHierarchy)
+                .Where(member => member.GetCustomAttribute(typeof(InjectAttribute), true) is not null)
                 .Distinct()
                 .GroupBy(member => member.MemberType)
                 .ToDictionary(member => member.Key, member => member.ToArray());

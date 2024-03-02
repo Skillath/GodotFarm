@@ -1,9 +1,8 @@
 [gd_resource type="Resource" load_steps=3 format=3 uid="uid://b6nn4ktlrsurb"]
 
-[ext_resource type="PackedScene" uid="uid://dwcw4tq4rc53d" path="res://CharacterView.tscn" id="1_i21ci"]
-[ext_resource type="Script" path="res://Assets/GameViewCollection.cs" id="1_nsct4"]
+[ext_resource type="PackedScene" uid="uid://dwcw4tq4rc53d" path="res://CharacterView.tscn" id="1_amg0p"]
+[ext_resource type="Script" path="res://Assets/GameViewContainer.cs" id="2_jaxf2"]
 
 [resource]
-script = ExtResource("1_nsct4")
-_characterView = ExtResource("1_i21ci")
-_characterView2 = ExtResource("1_i21ci")
+script = ExtResource("2_jaxf2")
+_characterView = ExtResource("1_amg0p")

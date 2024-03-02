@@ -19,7 +19,7 @@ public sealed class ServiceResolverContainer : IContainer
         serviceCollection.RegisterResolver<FieldResolver>();
         serviceCollection.RegisterResolver<PropertyResolver>();
         serviceCollection.RegisterResolver<MethodResolver>();
-        serviceCollection.RegisterResolver<ConstructorResolver>();
+        //serviceCollection.RegisterResolver<ConstructorResolver>();
     }
 
     public void Configure(IApplicationBuilder app, IHostEnvironment _)
@@ -30,7 +30,7 @@ public sealed class ServiceResolverContainer : IContainer
         app.UseResolver<FieldResolver>(MemberTypes.Field);
         app.UseResolver<PropertyResolver>(MemberTypes.Property);
         app.UseResolver<MethodResolver>(MemberTypes.Method);
-        app.UseResolver<ConstructorResolver>(MemberTypes.Constructor);
+        //app.UseResolver<ConstructorResolver>(MemberTypes.Constructor);
     }
 
     public void Dispose()

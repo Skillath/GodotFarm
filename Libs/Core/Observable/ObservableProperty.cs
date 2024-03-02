@@ -23,6 +23,9 @@ public sealed class ObservableProperty<TValue>
 
     private void SetValue(ref TValue value)
     {
+        if (EqualityComparer<TValue>.Default.Equals(value, _value))
+            return;
+        
         _value = value;
         OnValueChanged.Invoke(value);
     }

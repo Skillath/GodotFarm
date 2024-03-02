@@ -6,7 +6,7 @@ namespace Core.Godot.MVVM;
 
 public interface IViewCollection
 {
-    public void RegisterView<TView, TViewModel>(PackedView<TView> view)
+    public void RegisterView<TView, TViewModel>(PackedScene view)
         where TView : Node, IView
         where TViewModel : IViewModel;
     

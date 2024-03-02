@@ -19,7 +19,7 @@ public static class ContainerCollectionExtension
         if (type.IsAbstract)
             throw new DependencyInjectionException($"Type {type.FullName} can't be abstract!");
 
-        var container = GD.Load(path);
-        return containerCollection.RegisterSubContainer((TContainer)container);
+        var container = GD.Load<TContainer>(path);
+        return containerCollection.RegisterSubContainer(container);
     }
 }

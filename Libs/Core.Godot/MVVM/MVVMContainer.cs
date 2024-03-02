@@ -8,11 +8,6 @@ namespace Core.Godot.MVVM;
 
 public sealed class MvvmContainer : IContainer
 {
-    public void Dispose()
-    {
-        // TODO release managed resources here
-    }
-
     public void ConfigureServices(IServiceCollection serviceCollection)
     {
         serviceCollection.AddSingleton<IViewFactory, ViewFactory>();
@@ -21,5 +16,10 @@ public sealed class MvvmContainer : IContainer
     public void Configure(IApplicationBuilder app, IHostEnvironment env)
     { 
         
+    }
+    
+    public void Dispose()
+    {
+        // TODO release managed resources here
     }
 }

@@ -8,7 +8,7 @@ public abstract class ViewCollectionBase : IViewCollection
 {
     private readonly Dictionary<Type, PackedScene> _views = new();
 
-    public void RegisterView<TView, TViewModel>(PackedView<TView> view) 
+    public void RegisterView<TView, TViewModel>(PackedScene view) 
         where TView : Node, IView 
         where TViewModel : IViewModel
     {
