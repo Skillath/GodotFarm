@@ -1,7 +1,5 @@
 ﻿using Core.DependencyInjection.Core;
 using Core.Godot.DependencyInjection.Container;
-using Core.Godot.MVVM;
-using Godot;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 

@@ -1,6 +1,5 @@
 ﻿using Core.Godot.DependencyInjection.Core;
 using Core.MVVM;
-using Godot;
 using JetBrains.Annotations;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;

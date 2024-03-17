@@ -1,5 +1,4 @@
-﻿using Core.Godot.DependencyInjection.Container;
-using Core.MVVM;
+﻿using Core.MVVM;
 using Godot;
 
 namespace Core.Godot.MVVM;

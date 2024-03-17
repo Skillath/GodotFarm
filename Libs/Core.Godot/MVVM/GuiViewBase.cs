@@ -1,5 +1,4 @@
-﻿using Core.DependencyInjection;
-using Core.DependencyInjection.Core.Attributes;
+﻿using Core.DependencyInjection.Core.Attributes;
 using Core.MVVM;
 using Godot;
 
