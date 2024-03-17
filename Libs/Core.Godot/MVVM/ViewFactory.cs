@@ -8,13 +8,16 @@ namespace Core.Godot.MVVM;
 [UsedImplicitly]
 public sealed class ViewFactory : IViewFactory
 {
+    private readonly Node _root;
     private readonly IViewCollection _viewCollection;
     private readonly IServiceResolver _dependencyResolver;
 
     public ViewFactory(
+        Node root,
         IViewCollection viewCollection,
         IServiceResolver dependencyResolver)
     {
+        _root = root;
         _viewCollection = viewCollection;
         _dependencyResolver = dependencyResolver;
     }
@@ -28,7 +31,7 @@ public sealed class ViewFactory : IViewFactory
         
         var node = viewTemplate.Instantiate();
         _dependencyResolver.Resolve(node);
-        
+        _root.AddChild(node);
         return (IView)node;
     }
 

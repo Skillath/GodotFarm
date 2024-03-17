@@ -44,8 +44,9 @@ public abstract partial class ProgramBase : Node, IProgram
     {
     }
 
-    private static void ConfigureServices(IServiceCollection serviceProvider)
+    private void ConfigureServices(IServiceCollection serviceProvider)
     {
+        serviceProvider.AddSingleton<Node>(this.GetParent());
     }
 
     private static void Configure(IApplicationBuilder app, IHostEnvironment env)

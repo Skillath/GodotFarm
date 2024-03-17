@@ -15,7 +15,7 @@ public sealed partial class CharacterView : SceneViewBase<CharacterViewModel>
     {
         base._Process(delta);
 
-        var velocity = new Vector3(
+        /*var velocity = new Vector3(
                 Input.GetActionStrength("move_right") - Input.GetActionStrength("move_left"),
                 0f,
                 Input.GetActionStrength("move_back") - Input.GetActionStrength("move_forward"))
@@ -24,7 +24,7 @@ public sealed partial class CharacterView : SceneViewBase<CharacterViewModel>
         if(velocity == Vector3.Zero)
             return;
 
-        ViewModel.ChangePositionCommand.Dispatch(velocity * (float)delta);
+        ViewModel.ChangePositionCommand.Dispatch(velocity * (float)delta);*/
     }
 
     private void OnPositionChanged(Vector3 parameter)
