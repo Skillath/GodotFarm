@@ -4,9 +4,13 @@ public static class ObservablePropertyExtension
 {
     public static void RegisterValueChanged<TValue>(
         this ObservableProperty<TValue> property,
-        ObservableEventCallback<TValue> callback)
+        ObservableEventCallback<TValue> callback,
+        bool invokeOnObserve = true)
     {
         property.OnValueChanged.Register(callback);
+        if (!invokeOnObserve)
+            return;
+        callback.Invoke(property.Value);
     }
     
     public static void UnregisterValueChanged<TValue>(

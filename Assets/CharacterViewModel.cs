@@ -12,27 +12,19 @@ public sealed class CharacterViewModel : IViewModel
     private readonly ILogger<CharacterViewModel> _logger;
 
     private RelayCommand<Vector3>? _relayCommand;
-    private AsyncRelayCommand? _asyncRelayCommand;
-
     public ObservableProperty<Vector3> Position { get; } = new();
 
-    public RelayCommand<Vector3> ChangePositionCommand => _relayCommand ??= new(DoSomething);
-    public AsyncRelayCommand DoSomethingAsyncCommand => _asyncRelayCommand ??= new(DoSomethingWithArgs);
+    public RelayCommand<Vector3> ChangePositionCommand => _relayCommand ??= new(ChangePosition);
 
     public CharacterViewModel(ILogger<CharacterViewModel> logger)
     {
         _logger = logger;
     }
 
-    private void DoSomething(Vector3 position)
+    private void ChangePosition(Vector3 position)
     {
-        _logger.LogInformation(nameof(DoSomething));
+        _logger.LogInformation(nameof(ChangePosition));
 
         Position.Value += position;
-    }
-
-    private async Task DoSomethingWithArgs(CancellationToken cancellationToken)
-    {
-        
     }
 }

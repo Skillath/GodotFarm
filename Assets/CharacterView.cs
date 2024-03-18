@@ -6,6 +6,9 @@ namespace RealFriendlyFarm.Assets;
 
 public sealed partial class CharacterView : SceneViewBase<CharacterViewModel>
 {
+    [Export] 
+    private Node3D _object = default!;
+    
     protected override void Bind()
     {
         ViewModel.Position.RegisterValueChanged(OnPositionChanged);
@@ -15,22 +18,19 @@ public sealed partial class CharacterView : SceneViewBase<CharacterViewModel>
     {
         base._Process(delta);
 
-        /*var velocity = new Vector3(
-                Input.GetActionStrength("move_right") - Input.GetActionStrength("move_left"),
-                0f,
-                Input.GetActionStrength("move_back") - Input.GetActionStrength("move_forward"))
-            .LimitLength();
+        var inputDirection = Input.GetVector("left", "right", "up", "down");
+        var velocity = new Vector3(inputDirection.X, inputDirection.Y, 0);
         
         if(velocity == Vector3.Zero)
             return;
 
-        ViewModel.ChangePositionCommand.Dispatch(velocity * (float)delta);*/
+        ViewModel.ChangePositionCommand.Dispatch(velocity * (float)delta * 10);
     }
 
     private void OnPositionChanged(Vector3 parameter)
     {
-        Position = parameter * (float)GetProcessDeltaTime();
-        GD.Print("Position: " + Position);
+        _object.Position = parameter;
+        GD.Print("Position: " + parameter);
     }
 
     protected override void BeforeDestroy()
