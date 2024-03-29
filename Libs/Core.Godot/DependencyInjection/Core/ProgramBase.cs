@@ -68,9 +68,11 @@ public abstract partial class ProgramBase : Node, IProgram
 
     public override void _Notification(int what)
     {
-        if (what == NotificationWMCloseRequest)
+        switch ((long)what)
         {
-            CancellationTokenSource.CancelAsync().Forget();
-        } // default behavior
+            case NotificationWMCloseRequest:
+                CancellationTokenSource.CancelAsync().Forget();
+                break;
+        }// default behavior
     }
 }
