@@ -4,36 +4,35 @@ using Godot;
 
 namespace Core.Godot.MVVM;
 
-public abstract partial class GuiViewBase<TViewModel> : Control, IView
+public abstract partial class ViewBase<TViewModel> : Node, IView
     where TViewModel : IViewModel
 {
     private readonly CancellationTokenSource _cancellationTokenSource = new();
 
     public ViewId Id { get; } = ViewId.Create();
 
-    protected TViewModel? ViewModel { get; private set; }
+    protected TViewModel ViewModel { get; private set; } = default!;
 
     protected CancellationToken CancellationToken => _cancellationTokenSource.Token;
-
+    
     [Inject]
-    private void ConstructBase(TViewModel viewModel)
+    protected void ConstructBase(TViewModel viewModel)
     {
         ViewModel = viewModel;
     }
-
+    
     public override void _EnterTree()
     {
         base._EnterTree();
+
         Bind();
     }
 
     public override void _ExitTree()
     {
         BeforeDestroy();
-        
-        _cancellationTokenSource.Cancel();
-        
         base._ExitTree();
+        _cancellationTokenSource.Cancel();
     }
 
     protected abstract void Bind();

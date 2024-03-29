@@ -4,7 +4,7 @@ using Godot;
 
 namespace RealFriendlyFarm.Assets;
 
-public sealed partial class CharacterView : SceneViewBase<CharacterViewModel>
+public sealed partial class CharacterView : ViewBase<CharacterViewModel>
 {
     [Export] 
     private Node3D _object = default!;

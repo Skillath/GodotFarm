@@ -21,6 +21,7 @@ public sealed partial class GameViewContainer : ResourceContainerBase
     public override void Configure(IApplicationBuilder app, IHostEnvironment env)
     {
         var viewCollection = app.ApplicationServices.GetRequiredService<IViewCollection>();
+        
         viewCollection.RegisterView<CharacterView, CharacterViewModel>(_characterView);
     }
 }

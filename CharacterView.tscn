@@ -4,7 +4,7 @@
 
 [sub_resource type="SphereMesh" id="SphereMesh_8v345"]
 
-[node name="CharacterView" type="Node3D" node_paths=PackedStringArray("_object")]
+[node name="CharacterView" type="Node" node_paths=PackedStringArray("_object")]
 script = ExtResource("1_gnj0a")
 _object = NodePath("MeshInstance3D")
 

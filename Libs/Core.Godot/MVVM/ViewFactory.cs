@@ -28,10 +28,11 @@ public sealed class ViewFactory : IViewFactory
         var viewTemplate = _viewCollection.GetView<TViewModel>();
         if (viewTemplate is null)
             throw new Exception($"Couldn't find view for ViewModel {nameof(TViewModel)}");
+
+        var node = viewTemplate.InstantiateAndResolve(
+            _dependencyResolver,
+            _root);
         
-        var node = viewTemplate.Instantiate();
-        _dependencyResolver.Resolve(node);
-        _root.AddChild(node);
         return (IView)node;
     }
 
