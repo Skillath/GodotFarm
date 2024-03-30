@@ -15,14 +15,14 @@
     <PackageReference Include="Microsoft.Extensions.Logging.Abstractions" Version="8.0.0" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Remove="Libs\**" />
+    <Compile Remove="addons\**" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Remove="Libs\**" />
+    <EmbeddedResource Remove="addons\**" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="Libs\Core.Godot\Core.Godot.csproj" />
-    <ProjectReference Include="Libs\Core\Core.csproj" />
+    <ProjectReference Include="addons\Core.Godot\Core.Godot.csproj" />
+    <ProjectReference Include="addons\Core\Core.csproj" />
   </ItemGroup>
 
   <ItemGroup>

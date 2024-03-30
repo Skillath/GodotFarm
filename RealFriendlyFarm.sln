@@ -2,9 +2,9 @@
 # Visual Studio 2012
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RealFriendlyFarm", "RealFriendlyFarm.csproj", "{D08457B9-73B8-4532-9EFB-725D08A8B6CB}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Core", "Libs\Core\Core.csproj", "{087456DA-5857-4C07-8EAC-D6C174D3E58C}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Core", "addons\Core\Core.csproj", "{087456DA-5857-4C07-8EAC-D6C174D3E58C}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Core.Godot", "Libs\Core.Godot\Core.Godot.csproj", "{2BE3628E-77C5-4BBC-B769-E9694426DCCC}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Core.Godot", "addons\Core.Godot\Core.Godot.csproj", "{2BE3628E-77C5-4BBC-B769-E9694426DCCC}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
