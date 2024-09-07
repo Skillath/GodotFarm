@@ -8,7 +8,8 @@ namespace RealFriendlyFarm.Assets;
 
 public sealed partial class CharacterView : ViewBase<CharacterViewModel>
 {
-    [Export] private Node3D _object = default!;
+    [Export] 
+    private Node3D _object = default!;
 
     private ILogger<CharacterView> _logger = default!;
 
@@ -40,6 +41,6 @@ public sealed partial class CharacterView : ViewBase<CharacterViewModel>
     private void OnPositionChanged(Vector3 parameter)
     {
         _object.Position = parameter;
-        _logger.LogDebug("Position: {Position}", parameter);
+        _logger.LogInformation("Position: {Position}", parameter);
     }
 }

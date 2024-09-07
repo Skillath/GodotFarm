@@ -30,7 +30,7 @@ public sealed class GodotDefaultLogger : ILogger
         
          var log = currentConfig.LogLevels[logLevel];
         
-         var message = $"[{eventId.Id,2}: {logLevel}] - {_name} - {formatter?.Invoke(state, exception)}";
+         var message = $"[i][{eventId.Id,2}: {logLevel}] - {_name} - [/i]{formatter?.Invoke(state, exception)}";
          log.Invoke(message);
     }
 

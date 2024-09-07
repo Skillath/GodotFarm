@@ -22,8 +22,6 @@ public sealed partial class CharacterViewModel : ViewModelBase
     [RelayCommand]
     private void ChangePosition(Vector3 position)
     {
-        _logger.LogInformation(nameof(ChangePosition));
-
         Position.Value += position;
     }
 }
