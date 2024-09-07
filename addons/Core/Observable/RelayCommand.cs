@@ -1,6 +1,8 @@
 ﻿namespace Core.Observable;
 
 public delegate void RelayCommandCallback();
+
+[Obsolete($"Use {nameof(CommunityToolkit.Mvvm.Input.RelayCommand)}", true)]
 public sealed class RelayCommand
 {
     private readonly RelayCommandCallback _command;
@@ -17,6 +19,8 @@ public sealed class RelayCommand
 }
 
 public delegate void RelayCommandCallback<in TParameter>(TParameter parameter);
+
+[Obsolete($"Use {nameof(CommunityToolkit.Mvvm.Input.RelayCommand)}", true)]
 public sealed class RelayCommand<TParameter>
 {
     private readonly RelayCommandCallback<TParameter> _command;

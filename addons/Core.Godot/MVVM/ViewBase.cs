@@ -1,5 +1,6 @@
 ﻿using Core.DependencyInjection.Core.Attributes;
 using Core.MVVM;
+using Core.Observable;
 using Godot;
 
 namespace Core.Godot.MVVM;
@@ -14,7 +15,9 @@ public abstract partial class ViewBase<TViewModel> : Node, IView
     protected TViewModel ViewModel { get; private set; } = default!;
 
     protected CancellationToken CancellationToken => _cancellationTokenSource.Token;
-    
+
+    protected BindingContext BindingContext { get; } = new();
+
     [Inject]
     protected void ConstructBase(TViewModel viewModel)
     {
@@ -31,11 +34,16 @@ public abstract partial class ViewBase<TViewModel> : Node, IView
     public override void _ExitTree()
     {
         BeforeDestroy();
+        BindingContext.ClearBindings();
+        
         base._ExitTree();
         _cancellationTokenSource.Cancel();
     }
 
     protected abstract void Bind();
 
-    protected abstract void BeforeDestroy();
+    protected virtual void BeforeDestroy()
+    {
+        
+    }
 }

@@ -21,10 +21,12 @@ public sealed class GameHostedService : HostedServiceAsyncBase, IHostedService
         _logger = logger;
     }
     
-    public override async Task StartAsync(CancellationToken cancellationToken)
+    public override Task StartAsync(CancellationToken cancellationToken)
     {
         _logger.LogInformation("Starting application");
         var view = _factory.CreateView<CharacterViewModel>();
+
+        return Task.CompletedTask;
     }
 
     public override Task StopAsync(CancellationToken cancellationToken)

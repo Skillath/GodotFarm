@@ -7,7 +7,7 @@ public sealed class GodotDefaultLoggerConfiguration
 {
     public int EventId { get; set; } = -1;
 
-    public LogLevel LogLevel { get; set; } = LogLevel.Information;
+    public LogLevel LogLevel { get; set; } = LogLevel.Debug;
 
     public IReadOnlyDictionary<LogLevel, Action<object>> LogLevels { get; } = new Dictionary<LogLevel, Action<object>>
     {

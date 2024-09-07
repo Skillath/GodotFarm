@@ -1,4 +1,5 @@
-﻿using Core.DependencyInjection.Container;
+﻿using AsyncAwaitBestPractices;
+using Core.DependencyInjection.Container;
 using Core.DependencyInjection.Container.Extensions;
 using Core.DependencyInjection.Core;
 using Core.DependencyInjection.Exceptions;
@@ -60,7 +61,7 @@ public static class HostBuilderExtensions
     {
         var host = hostBuilder.BuildConfigurableHost();
 
-        host.RunAsync(cancellationToken).Forget();
+        host.RunAsync(cancellationToken).SafeFireAndForget();
 
         return host;
     }

@@ -10,9 +10,10 @@ public sealed class ObservableEvent
         Callbacks?.Invoke();
     }
 
-    public void Register(ObservableEventCallback callback)
+    public Binding Register(ObservableEventCallback callback)
     {
         Callbacks += callback;
+        return new Binding(() => Unregister(callback));
     }
 
     public void Unregister(ObservableEventCallback callback)
@@ -27,6 +28,7 @@ public sealed class ObservableEvent
 }
 
 public delegate void ObservableEventCallback<in TType>(TType parameter);
+
 public sealed class ObservableEvent<TType>
 {
     private event ObservableEventCallback<TType>? Callbacks;
@@ -36,9 +38,10 @@ public sealed class ObservableEvent<TType>
         Callbacks?.Invoke(value);
     }
 
-    public void Register(ObservableEventCallback<TType> callback)
+    public Binding Register(ObservableEventCallback<TType> callback)
     {
         Callbacks += callback;
+        return new Binding(() => Unregister(callback));
     }
 
     public void Unregister(ObservableEventCallback<TType> callback)

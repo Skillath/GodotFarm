@@ -1,4 +1,4 @@
-<Project Sdk="Godot.NET.Sdk/4.2.1">
+<Project Sdk="Godot.NET.Sdk/4.3.0">
   <PropertyGroup>
     <TargetFramework>net8.0</TargetFramework>
     <EnableDynamicLoading>true</EnableDynamicLoading>
@@ -6,13 +6,13 @@
     <ImplicitUsings>true</ImplicitUsings>
     <LangVersion>latest</LangVersion>
     <!-- Use NativeAOT. -->
-<!--    <PublishAOT>true</PublishAOT>-->
+    <!--    <PublishAOT>true</PublishAOT>-->
   </PropertyGroup>
   <ItemGroup>
-    <PackageReference Include="JetBrains.Annotations" Version="2023.3.0" />
+    <PackageReference Include="JetBrains.Annotations" Version="2024.2.0" />
     <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="8.0.0" />
     <PackageReference Include="Microsoft.Extensions.Hosting" Version="8.0.0" />
-    <PackageReference Include="Microsoft.Extensions.Logging.Abstractions" Version="8.0.0" />
+    <PackageReference Include="Microsoft.Extensions.Logging.Abstractions" Version="8.0.1" />
   </ItemGroup>
   <ItemGroup>
     <Compile Remove="addons\**" />
@@ -24,10 +24,9 @@
     <ProjectReference Include="addons\Core.Godot\Core.Godot.csproj" />
     <ProjectReference Include="addons\Core\Core.csproj" />
   </ItemGroup>
-
   <ItemGroup>
     <!-- Root the assemblies to avoid trimming. -->
-<!--    <TrimmerRootAssembly Include="GodotSharp" />-->
-<!--    <TrimmerRootAssembly Include="$(TargetName)" />-->
+    <!--    <TrimmerRootAssembly Include="GodotSharp" />-->
+    <!--    <TrimmerRootAssembly Include="$(TargetName)" />-->
   </ItemGroup>
 </Project>

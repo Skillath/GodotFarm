@@ -1,16 +1,14 @@
-﻿namespace Core.Observable;
+﻿using CommunityToolkit.Mvvm.ComponentModel;
 
-public sealed class ObservableProperty<TValue>
+namespace Core.Observable;
+
+public sealed partial class ObservableProperty<TValue> : ObservableObject
 {
+    [ObservableProperty]
     private TValue _value;
 
-    public TValue Value
-    {
-        get => _value;
-        set => SetValue(ref value);
-    }
-
-    public ObservableEvent<TValue> OnValueChanged { get; } = new();
+    public ObservableEvent<TValue> ValueChanged { get; } = new();
+    public ObservableEvent<TValue> ValueChanging { get; } = new();
 
     public ObservableProperty() : this(default!)
     {
@@ -20,18 +18,21 @@ public sealed class ObservableProperty<TValue>
     {
         _value = value;
     }
-
-    private void SetValue(ref TValue value)
-    {
-        if (EqualityComparer<TValue>.Default.Equals(value, _value))
-            return;
-        
-        _value = value;
-        OnValueChanged.Invoke(value);
-    }
     
     private void SetValueWithoutNotifying(ref TValue value)
     {
+#pragma warning disable MVVMTK0034
         _value = value;
+#pragma warning restore MVVMTK0034
+    }
+
+    partial void OnValueChanged(TValue value)
+    {
+        ValueChanged.Invoke(value);
+    }
+
+    partial void OnValueChanging(TValue value)
+    {
+        ValueChanging.Invoke(value);
     }
 }

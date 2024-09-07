@@ -1,4 +1,5 @@
-﻿using Core.DependencyInjection.Container;
+﻿using AsyncAwaitBestPractices;
+using Core.DependencyInjection.Container;
 using Core.DependencyInjection.Core;
 using Core.DependencyInjection.Exceptions;
 using Core.DependencyInjection.Host.Extensions;
@@ -71,7 +72,9 @@ public abstract partial class ProgramBase : Node, IProgram
         switch ((long)what)
         {
             case NotificationWMCloseRequest:
-                CancellationTokenSource.CancelAsync().Forget();
+                CancellationTokenSource
+                    .CancelAsync()
+                    .Forget();
                 break;
         }// default behavior
     }
