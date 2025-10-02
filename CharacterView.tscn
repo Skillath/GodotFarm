@@ -1,6 +1,6 @@
 [gd_scene load_steps=3 format=3 uid="uid://dwcw4tq4rc53d"]
 
-[ext_resource type="Script" path="res://Assets/CharacterView.cs" id="1_gnj0a"]
+[ext_resource type="Script" uid="uid://ld17hqt6y0by" path="res://Assets/CharacterView.cs" id="1_gnj0a"]
 
 [sub_resource type="SphereMesh" id="SphereMesh_8v345"]
 

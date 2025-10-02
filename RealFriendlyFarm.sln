@@ -1,10 +1,10 @@
 ﻿Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 2012
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RealFriendlyFarm", "RealFriendlyFarm.csproj", "{D08457B9-73B8-4532-9EFB-725D08A8B6CB}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RealFriendlyFarm", "RealFriendlyFarm.csproj", "{8B635924-C0DF-4D96-B953-3314288D31E1}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Core", "addons\Core\Core.csproj", "{087456DA-5857-4C07-8EAC-D6C174D3E58C}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Core", "Libraries\Core\Core.csproj", "{A9777AF5-5512-42D8-A388-13AF7B21CF1A}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Core.Godot", "addons\Core.Godot\Core.Godot.csproj", "{2BE3628E-77C5-4BBC-B769-E9694426DCCC}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Core.Godot", "Libraries\Core.Godot\Core.Godot.csproj", "{DED66A09-F6C1-447D-8E27-CFF428D4121A}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -13,23 +13,23 @@ Global
 	ExportRelease|Any CPU = ExportRelease|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{D08457B9-73B8-4532-9EFB-725D08A8B6CB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{D08457B9-73B8-4532-9EFB-725D08A8B6CB}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{D08457B9-73B8-4532-9EFB-725D08A8B6CB}.ExportDebug|Any CPU.ActiveCfg = ExportDebug|Any CPU
-		{D08457B9-73B8-4532-9EFB-725D08A8B6CB}.ExportDebug|Any CPU.Build.0 = ExportDebug|Any CPU
-		{D08457B9-73B8-4532-9EFB-725D08A8B6CB}.ExportRelease|Any CPU.ActiveCfg = ExportRelease|Any CPU
-		{D08457B9-73B8-4532-9EFB-725D08A8B6CB}.ExportRelease|Any CPU.Build.0 = ExportRelease|Any CPU
-		{087456DA-5857-4C07-8EAC-D6C174D3E58C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{087456DA-5857-4C07-8EAC-D6C174D3E58C}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{087456DA-5857-4C07-8EAC-D6C174D3E58C}.ExportDebug|Any CPU.ActiveCfg = Debug|Any CPU
-		{087456DA-5857-4C07-8EAC-D6C174D3E58C}.ExportDebug|Any CPU.Build.0 = Debug|Any CPU
-		{087456DA-5857-4C07-8EAC-D6C174D3E58C}.ExportRelease|Any CPU.ActiveCfg = Debug|Any CPU
-		{087456DA-5857-4C07-8EAC-D6C174D3E58C}.ExportRelease|Any CPU.Build.0 = Debug|Any CPU
-		{2BE3628E-77C5-4BBC-B769-E9694426DCCC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{2BE3628E-77C5-4BBC-B769-E9694426DCCC}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{2BE3628E-77C5-4BBC-B769-E9694426DCCC}.ExportDebug|Any CPU.ActiveCfg = Debug|Any CPU
-		{2BE3628E-77C5-4BBC-B769-E9694426DCCC}.ExportDebug|Any CPU.Build.0 = Debug|Any CPU
-		{2BE3628E-77C5-4BBC-B769-E9694426DCCC}.ExportRelease|Any CPU.ActiveCfg = Debug|Any CPU
-		{2BE3628E-77C5-4BBC-B769-E9694426DCCC}.ExportRelease|Any CPU.Build.0 = Debug|Any CPU
+		{8B635924-C0DF-4D96-B953-3314288D31E1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8B635924-C0DF-4D96-B953-3314288D31E1}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8B635924-C0DF-4D96-B953-3314288D31E1}.ExportDebug|Any CPU.ActiveCfg = ExportDebug|Any CPU
+		{8B635924-C0DF-4D96-B953-3314288D31E1}.ExportDebug|Any CPU.Build.0 = ExportDebug|Any CPU
+		{8B635924-C0DF-4D96-B953-3314288D31E1}.ExportRelease|Any CPU.ActiveCfg = ExportRelease|Any CPU
+		{8B635924-C0DF-4D96-B953-3314288D31E1}.ExportRelease|Any CPU.Build.0 = ExportRelease|Any CPU
+		{A9777AF5-5512-42D8-A388-13AF7B21CF1A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A9777AF5-5512-42D8-A388-13AF7B21CF1A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A9777AF5-5512-42D8-A388-13AF7B21CF1A}.ExportDebug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A9777AF5-5512-42D8-A388-13AF7B21CF1A}.ExportDebug|Any CPU.Build.0 = Debug|Any CPU
+		{A9777AF5-5512-42D8-A388-13AF7B21CF1A}.ExportRelease|Any CPU.ActiveCfg = Debug|Any CPU
+		{A9777AF5-5512-42D8-A388-13AF7B21CF1A}.ExportRelease|Any CPU.Build.0 = Debug|Any CPU
+		{DED66A09-F6C1-447D-8E27-CFF428D4121A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{DED66A09-F6C1-447D-8E27-CFF428D4121A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{DED66A09-F6C1-447D-8E27-CFF428D4121A}.ExportDebug|Any CPU.ActiveCfg = ExportDebug|Any CPU
+		{DED66A09-F6C1-447D-8E27-CFF428D4121A}.ExportDebug|Any CPU.Build.0 = ExportDebug|Any CPU
+		{DED66A09-F6C1-447D-8E27-CFF428D4121A}.ExportRelease|Any CPU.ActiveCfg = ExportRelease|Any CPU
+		{DED66A09-F6C1-447D-8E27-CFF428D4121A}.ExportRelease|Any CPU.Build.0 = ExportRelease|Any CPU
 	EndGlobalSection
 EndGlobal

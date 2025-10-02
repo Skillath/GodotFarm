@@ -1,32 +1,25 @@
-<Project Sdk="Godot.NET.Sdk/4.3.0">
-  <PropertyGroup>
-    <TargetFramework>net8.0</TargetFramework>
+<Project Sdk="Godot.NET.Sdk/4.5.0">
+<PropertyGroup>
+  <TargetFramework>net8.0</TargetFramework>
+  <Nullable>enable</Nullable>
+  <LangVersion>latest</LangVersion>
     <EnableDynamicLoading>true</EnableDynamicLoading>
-    <Nullable>enable</Nullable>
-    <ImplicitUsings>true</ImplicitUsings>
-    <LangVersion>latest</LangVersion>
-    <!-- Use NativeAOT. -->
-    <!--    <PublishAOT>true</PublishAOT>-->
-  </PropertyGroup>
-  <ItemGroup>
-    <PackageReference Include="JetBrains.Annotations" Version="2024.2.0" />
-    <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="8.0.0" />
-    <PackageReference Include="Microsoft.Extensions.Hosting" Version="8.0.0" />
-    <PackageReference Include="Microsoft.Extensions.Logging.Abstractions" Version="8.0.1" />
-  </ItemGroup>
-  <ItemGroup>
-    <Compile Remove="addons\**" />
-  </ItemGroup>
-  <ItemGroup>
-    <EmbeddedResource Remove="addons\**" />
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="addons\Core.Godot\Core.Godot.csproj" />
-    <ProjectReference Include="addons\Core\Core.csproj" />
-  </ItemGroup>
-  <ItemGroup>
-    <!-- Root the assemblies to avoid trimming. -->
-    <!--    <TrimmerRootAssembly Include="GodotSharp" />-->
-    <!--    <TrimmerRootAssembly Include="$(TargetName)" />-->
-  </ItemGroup>
+</PropertyGroup>
+<ItemGroup>
+  <PackageReference Include="Flecs.NET.Release" Version="4.0.3" />
+  <PackageReference Include="JetBrains.Annotations" Version="2024.2.0" />
+  <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="8.0.0" />
+  <PackageReference Include="Microsoft.Extensions.Hosting" Version="8.0.0" />
+  <PackageReference Include="Microsoft.Extensions.Logging.Abstractions" Version="8.0.1" />
+</ItemGroup>
+<ItemGroup>
+  <Compile Remove="Libraries\**" />
+</ItemGroup>
+<ItemGroup>
+  <EmbeddedResource Remove="Libraries\**" />
+</ItemGroup>
+<ItemGroup>
+  <ProjectReference Include="Libraries\Core.Godot\Core.Godot.csproj" />
+  <ProjectReference Include="Libraries\Core\Core.csproj" />
+</ItemGroup>
 </Project>
