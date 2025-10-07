@@ -12,11 +12,6 @@ public sealed class Startup : StartupBase
 {
     private const string GameContainerPath = "res://GameContainer.tres";
     private const string GameViewContainerPath = "res://GameViewContainer.tres";
-    
-    protected override void Configure(IApplicationBuilder app, IHostEnvironment env)
-    {
-        
-    }
 
     protected override void ConfigureContainers(IContainerCollection containerCollection)
     {
@@ -26,5 +21,11 @@ public sealed class Startup : StartupBase
 
     protected override void ConfigureServices(IServiceCollection serviceCollection)
     {
+        
+    }
+    
+    protected override void Configure(IApplicationBuilder app, IHostEnvironment env)
+    {
+        
     }
 }

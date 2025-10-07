@@ -5,8 +5,7 @@ using Core.MVVM;
 using JetBrains.Annotations;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
-using RealFriendlyFarm.Assets;
-using CharacterViewModel = RealFriendlyFarm.Assets.Character.CharacterViewModel;
+using RealFriendlyFarm.Assets.Character;
 
 namespace RealFriendlyFarm;
 
