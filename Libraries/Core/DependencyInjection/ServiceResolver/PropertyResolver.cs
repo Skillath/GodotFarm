@@ -14,7 +14,9 @@ public sealed class PropertyResolver : MemberResolverBase
 
     private IMemberResolver? _resolver;
 
-    public PropertyResolver(IServiceProvider serviceProvider, ServiceResolversLoader serviceResolversLoader) : base(serviceProvider)
+    public PropertyResolver(
+        IServiceProvider serviceProvider, 
+        ServiceResolversLoader serviceResolversLoader) : base(serviceProvider)
     {
         _serviceResolversLoader = serviceResolversLoader;
     }
@@ -26,18 +28,11 @@ public sealed class PropertyResolver : MemberResolverBase
         var propertyInfos = members.Cast<PropertyInfo>()
             ?? throw new DependencyInjectionException($"Failed trying to cast MemberInfo into PropertyInfo");
 
-        var fields = new List<FieldInfo>();
-        foreach (var propertyInfo in propertyInfos)
-        {
-            var fieldInfo = GetBackingFieldFromPropertyInfo(propertyInfo)!;
+        var resolvedMembers = propertyInfos
+            .Select(propertyInfo => GetBackingFieldFromPropertyInfo(propertyInfo)!)
+            .ToList();
 
-            _ = ServiceProvider.GetService(propertyInfo.PropertyType)
-                ?? throw new DependencyInjectionException($"Type {propertyInfo.PropertyType} not registered in the Service Collection");
-
-            fields.Add(fieldInfo);
-        }
-
-        return _resolver.ResolveMembers(context, fields);
+        return _resolver.ResolveMembers(context, resolvedMembers);
     }
 
     private static FieldInfo? GetBackingFieldFromPropertyInfo(PropertyInfo propertyInfo)

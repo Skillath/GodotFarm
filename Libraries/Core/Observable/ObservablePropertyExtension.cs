@@ -51,7 +51,7 @@ public readonly struct Binding
 
 public readonly struct BindingContext : IDisposable
 {
-    private readonly List<Binding> _bindings = new();
+    private readonly List<Binding> _bindings = [];
 
     public BindingContext()
     {

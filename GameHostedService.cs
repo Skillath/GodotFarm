@@ -6,6 +6,7 @@ using JetBrains.Annotations;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using RealFriendlyFarm.Assets;
+using CharacterViewModel = RealFriendlyFarm.Assets.Character.CharacterViewModel;
 
 namespace RealFriendlyFarm;
 

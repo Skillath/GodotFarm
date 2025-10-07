@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using Core.Godot.DependencyInjection.Container;
 using Core.MVVM;
 using Godot;
 
@@ -10,6 +11,13 @@ public abstract class ViewCollectionBase : IViewCollection
     private readonly Dictionary<Type, PackedScene> _views = new();
 
     public void RegisterView<TView, TViewModel>(PackedScene view) 
+        where TView : Node, IView 
+        where TViewModel : IViewModel
+    {
+        _views.Add(typeof(TViewModel), view);
+    }
+
+    public void RegisterView<TView, TViewModel>(PackedView<TView> view) 
         where TView : Node, IView 
         where TViewModel : IViewModel
     {

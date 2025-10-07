@@ -20,6 +20,5 @@ public sealed class MvvmContainer : IContainer
     
     public void Dispose()
     {
-        // TODO release managed resources here
     }
 }

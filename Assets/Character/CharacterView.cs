@@ -1,23 +1,13 @@
-using Core.DependencyInjection.Core.Attributes;
 using Core.Godot.MVVM;
 using Core.Observable;
 using Godot;
-using Microsoft.Extensions.Logging;
 
-namespace RealFriendlyFarm.Assets;
+namespace RealFriendlyFarm.Assets.Character;
 
 public sealed partial class CharacterView : ViewBase<CharacterViewModel>
 {
     [Export] 
     private Node3D _object = default!;
-
-    private ILogger<CharacterView> _logger = default!;
-
-    [Inject]
-    private void Construct(ILogger<CharacterView> logger)
-    {
-        _logger = logger;
-    }
 
     protected override void Bind()
     {
@@ -41,6 +31,5 @@ public sealed partial class CharacterView : ViewBase<CharacterViewModel>
     private void OnPositionChanged(Vector3 parameter)
     {
         _object.Position = parameter;
-        _logger.LogInformation("Position: {Position}", parameter);
     }
 }

@@ -1,6 +1,7 @@
 ﻿using System.Reflection;
 using Core.DependencyInjection.Exceptions;
 using JetBrains.Annotations;
+using Microsoft.Extensions.DependencyInjection;
 
 namespace Core.DependencyInjection.ServiceResolver;
 
@@ -16,10 +17,14 @@ public sealed class FieldResolver : MemberResolverBase
         var fieldInfos = members.Cast<FieldInfo>() 
             ?? throw new DependencyInjectionException($"Failed trying to cast MemberInfo into FieldInfo");
 
+        var serviceProvider = ServiceProvider;
         var list = new HashSet<object>();
         foreach (var fieldInfo in fieldInfos)
         {
-            var value = ServiceProvider.GetService(fieldInfo.FieldType) 
+            var key = GetKey(fieldInfo);
+            var value = key is null 
+                ? ServiceProvider.GetService(fieldInfo.FieldType) 
+                : ServiceProvider.GetRequiredKeyedService(fieldInfo.FieldType, key) 
                 ?? throw new DependencyInjectionException($"Type {fieldInfo.FieldType} not registered in the Service Collection");
 
             fieldInfo.SetValue(context, value);

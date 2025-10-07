@@ -9,4 +9,7 @@ public sealed partial class PackedView<TView> : PackedScene
     where TView : Node, IView
 {
     private TView View => Instantiate<TView>();
+    
+    
+    
 }

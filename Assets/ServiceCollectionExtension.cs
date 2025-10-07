@@ -26,6 +26,26 @@ public static class ServiceCollectionExtension
         return serviceCollection.AddTransient<TIView, TView>(services => CreateNode<TView>(services, template));
     }
     
+    public static IServiceCollection AddKeyedTransient<TView>(
+        this IServiceCollection serviceCollection,
+        PackedScene template,
+        object? key)
+        where TView : Node
+    {
+        return serviceCollection.AddKeyedTransient<TView>(key, (services, _) => CreateNode<TView>(services, template));
+    }
+    
+    public static IServiceCollection AddKeyedTransient<TIView, TView>(
+        this IServiceCollection serviceCollection,
+        PackedScene template,
+        object? key)
+        where TView : TIView
+        where TIView : Node
+    {
+        
+        return serviceCollection.AddKeyedTransient<TIView, TView>(key, (services, _) => CreateNode<TView>(services, template));
+    }
+    
     public static IServiceCollection AddScoped<TView>(
         this IServiceCollection serviceCollection,
         PackedScene template)
@@ -44,20 +64,24 @@ public static class ServiceCollectionExtension
         return serviceCollection.AddScoped<TIView, TView>(services => CreateNode<TView>(services, template));
     }
     
-    public static IServiceCollection AddSingleton<TView>(
+    public static IServiceCollection AddKeyedScoped<TView>(
         this IServiceCollection serviceCollection,
-        PackedScene template)
+        PackedScene template,
+        object? key)
         where TView : Node
     {
-        return serviceCollection.AddSingleton<TView>(services => CreateNode<TView>(services, template));
+        return serviceCollection.AddKeyedScoped<TView>(key, (services, _) => CreateNode<TView>(services, template));
     }
-
-    private static TView CreateNode<TView>(IServiceProvider services, PackedScene template)
-        where TView : Node
+    
+    public static IServiceCollection AddKeyedScoped<TIView, TView>(
+        this IServiceCollection serviceCollection,
+        PackedScene template,
+        object? key)
+        where TView : TIView
+        where TIView : Node
     {
-        var resolver = services.GetRequiredService<IServiceResolver>();
-        var root = services.GetRequiredService<Node>();
-        return template.InstantiateAndResolve<TView>(resolver, root);
+        
+        return serviceCollection.AddKeyedScoped<TIView, TView>(key, (services, _) => CreateNode<TView>(services, template));
     }
     
     public static IServiceCollection AddSingleton<TIView, TView>(
@@ -68,5 +92,43 @@ public static class ServiceCollectionExtension
     {
         
         return serviceCollection.AddSingleton<TIView, TView>(services => CreateNode<TView>(services, template));
+    }
+    
+    public static IServiceCollection AddSingleton<TView>(
+        this IServiceCollection serviceCollection,
+        PackedScene template)
+        where TView : Node
+    {
+        return serviceCollection.AddSingleton<TView>(services => CreateNode<TView>(services, template));
+    }
+    
+    public static IServiceCollection AddKeyedSingleton<TIView, TView>(
+        this IServiceCollection serviceCollection,
+        PackedScene template,
+        object? key)
+        where TView : TIView
+        where TIView : Node
+    {
+        
+        return serviceCollection.AddKeyedSingleton<TIView, TView>(key, (services, _) => CreateNode<TView>(services, template));
+    }
+    
+    public static IServiceCollection AddKeyedSingleton<TView>(
+        this IServiceCollection serviceCollection,
+        PackedScene template,
+        object? key)
+        where TView : Node
+    {
+        return serviceCollection.AddKeyedSingleton<TView>(key, (services, _) => CreateNode<TView>(services, template));
+    }
+
+    private static TView CreateNode<TView>(
+        IServiceProvider services, 
+        PackedScene template)
+        where TView : Node
+    {
+        var resolver = services.GetRequiredService<IServiceResolver>();
+        var root = services.GetRequiredService<Node>();
+        return template.InstantiateAndResolve<TView>(resolver, root);
     }
 }

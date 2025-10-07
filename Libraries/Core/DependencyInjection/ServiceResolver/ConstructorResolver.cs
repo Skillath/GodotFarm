@@ -1,6 +1,7 @@
 ﻿using System.Reflection;
 using Core.DependencyInjection.Exceptions;
 using JetBrains.Annotations;
+using Microsoft.Extensions.DependencyInjection;
 
 namespace Core.DependencyInjection.ServiceResolver;
 
@@ -13,15 +14,23 @@ public sealed class ConstructorResolver : MemberResolverBase
 
     public override IEnumerable<object> ResolveMembers(object context, IEnumerable<MemberInfo> members)
     {
+        var serviceProvider = ServiceProvider;
         var resolvedConstructors = members?.Cast<ConstructorInfo>()?
            .Where(constructorInfo => constructorInfo is not null)
            .SelectMany(constructorInfo =>
            {
                var objectList = constructorInfo.GetParameters()
-                   .Select(parameter => ServiceProvider.GetService(parameter.ParameterType))
+                   .Select(parameter =>
+                   {
+                       var keyedServiceAttribute = GetKey(parameter.Member);
+                       return keyedServiceAttribute is null 
+                           ? serviceProvider.GetService(parameter.ParameterType) 
+                           : serviceProvider.GetRequiredKeyedService(parameter.ParameterType, keyedServiceAttribute) 
+                           ?? throw new DependencyInjectionException($"Type {parameter.ParameterType} not registered in the Service Collection");
+                   })
                    .Where(service => service is not null)
                    .ToArray();
-
+               
                constructorInfo.Invoke(context, objectList);
 
                return objectList;

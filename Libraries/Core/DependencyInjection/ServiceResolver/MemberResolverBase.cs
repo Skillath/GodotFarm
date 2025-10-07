@@ -1,4 +1,5 @@
 ﻿using System.Reflection;
+using Microsoft.Extensions.DependencyInjection;
 
 namespace Core.DependencyInjection.ServiceResolver;
 
@@ -12,4 +13,9 @@ public abstract class MemberResolverBase : IMemberResolver
     }
 
     public abstract IEnumerable<object> ResolveMembers(object context, IEnumerable<MemberInfo> members);
+
+    protected static object? GetKey(MemberInfo memberInfo)
+    {
+        return memberInfo.GetCustomAttribute<FromKeyedServicesAttribute>()?.Key;
+    }
 }

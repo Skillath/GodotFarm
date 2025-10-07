@@ -4,17 +4,19 @@ using Core.Godot.MVVM;
 using Godot;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using RealFriendlyFarm.Assets.Character;
 
 namespace RealFriendlyFarm.Assets;
 
 public sealed partial class GameViewContainer : ResourceContainerBase
 {
     [Export] 
-    private PackedScene _characterView = default!;
-
+    private PackedView<CharacterView> _characterView = default!;
+    
     public override void ConfigureServices(IServiceCollection serviceCollection)
     {
         serviceCollection.AddSingleton<IViewCollection, GameViewCollection>();
+        
         serviceCollection.AddTransient<CharacterViewModel>();
     }
 
