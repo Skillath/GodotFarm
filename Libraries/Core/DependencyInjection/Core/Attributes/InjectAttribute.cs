@@ -5,5 +5,10 @@ namespace Core.DependencyInjection.Core.Attributes;
     Inherited = true)]
 public sealed class InjectAttribute : Attribute
 {
-        
+    public object? Key { get; }
+    
+    public InjectAttribute(object? key = null)
+    {
+        Key = key;
+    }
 }
