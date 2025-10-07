@@ -6,3 +6,4 @@
 [resource]
 script = ExtResource("2_jaxf2")
 _characterView = ExtResource("1_amg0p")
+_characterViewNew = ExtResource("1_amg0p")
