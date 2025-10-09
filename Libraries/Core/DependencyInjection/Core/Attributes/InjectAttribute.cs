@@ -1,5 +1,8 @@
+using JetBrains.Annotations;
+
 namespace Core.DependencyInjection.Core.Attributes;
 
+[MeansImplicitUse(ImplicitUseKindFlags.Access)]
 [AttributeUsage(AttributeTargets.Field | AttributeTargets.Method | AttributeTargets.Property, 
     AllowMultiple = true, 
     Inherited = true)]
