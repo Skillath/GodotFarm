@@ -13,7 +13,7 @@ public sealed class ObservableEvent
     public Binding Register(ObservableEventCallback callback)
     {
         Callbacks += callback;
-        return new Binding(() => Unregister(callback));
+        return Binding.Create(() => Unregister(callback));
     }
 
     public void Unregister(ObservableEventCallback callback)
@@ -41,7 +41,7 @@ public sealed class ObservableEvent<TType>
     public Binding Register(ObservableEventCallback<TType> callback)
     {
         Callbacks += callback;
-        return new Binding(() => Unregister(callback));
+        return Binding.Create(() => Unregister(callback));
     }
 
     public void Unregister(ObservableEventCallback<TType> callback)

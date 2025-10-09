@@ -11,7 +11,7 @@ namespace RealFriendlyFarm.Assets;
 public sealed partial class GameViewContainer : ResourceContainerBase
 {
     [Export] 
-    private PackedView<CharacterView> _characterView = default!;
+    private PackedScene _characterView = default!;
     
     public override void ConfigureServices(IServiceCollection serviceCollection)
     {

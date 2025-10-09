@@ -1,4 +1,6 @@
-﻿namespace Core.Observable;
+﻿using System.Dynamic;
+
+namespace Core.Observable;
 
 public static class ObservablePropertyExtension
 {
@@ -29,24 +31,6 @@ public static class ObservablePropertyExtension
     {
         property.ValueChanged.Clear();
     }
-}
-
-public readonly struct Binding
-{
-    private readonly WeakReference<Action> _disposePattern;
-
-    public Binding(Action disposePattern)
-    {
-        _disposePattern = new WeakReference<Action>(disposePattern);
-    }
-
-    public void ClearBinding()
-    {
-        if (!_disposePattern.TryGetTarget(out var pattern))
-            throw new Exception("Couldn't find WeakReference pattern!");
-        
-        pattern.Invoke();
-    } 
 }
 
 public readonly struct BindingContext : IDisposable

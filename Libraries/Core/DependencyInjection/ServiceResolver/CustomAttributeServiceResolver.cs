@@ -3,8 +3,6 @@ using Core.DependencyInjection.Core.Attributes;
 
 namespace Core.DependencyInjection.ServiceResolver;
 
-public record ResolverInfo(MemberInfo MemberInfo, object? Key = null);
-
 public sealed class CustomAttributeServiceResolver : IServiceResolver
 {
     private readonly ServiceResolversLoader _serviceResolversLoader;

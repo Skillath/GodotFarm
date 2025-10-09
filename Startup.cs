@@ -21,11 +21,9 @@ public sealed class Startup : StartupBase
 
     protected override void ConfigureServices(IServiceCollection serviceCollection)
     {
-        
     }
     
     protected override void Configure(IApplicationBuilder app, IHostEnvironment env)
     {
-        
     }
 }
