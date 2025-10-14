@@ -1,6 +1,13 @@
-﻿namespace Core.MVVM;
+﻿using Core.Observable;
 
-public interface IView
+namespace Core.MVVM;
+
+public interface IView : IBindingContextHolder
 {
     ViewId Id { get; }
+}
+
+public interface IBindingContextHolder
+{
+    BindingContext BindingContext { get; }
 }

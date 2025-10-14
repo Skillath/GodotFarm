@@ -1,11 +1,6 @@
-using System.ComponentModel;
-using Core.DependencyInjection.Core.Attributes;
 using Core.Godot.MVVM;
 using Core.MVVM;
-using Core.Observable;
 using Godot;
-using JetBrains.Annotations;
-using Microsoft.Extensions.Logging;
 
 namespace RealFriendlyFarm.Assets.Character;
 
@@ -14,17 +9,12 @@ public sealed partial class CharacterView : ViewBase<CharacterViewModel>
     [Export] 
     private Node3D _object = default!;
 
-    private ILogger<CharacterView> _logger = default!;
-
-    [Inject]
-    private void Construct(ILogger<CharacterView> logger)
-    {
-        _logger = logger;
-    }
-
     protected override void Bind()
     {
-        BindingContext.AddBinding(ViewModel.BindToProperty(viewModel => viewModel.Position, OnPositionChanged));
+        ViewModel
+            .BindTo(viewModel => viewModel.Position)
+            .WithMethodConverter(position => _object.Position = position)
+            .AddTo(this);
     }
 
     public override void _Process(double delta)
@@ -39,10 +29,5 @@ public sealed partial class CharacterView : ViewBase<CharacterViewModel>
 
         var position = velocity * (float)delta * 10;
         ViewModel.ChangePositionCommand.Execute(position);
-    }
-
-    private void OnPositionChanged(Vector3 parameter)
-    {
-        _object.Position = parameter;
     }
 }

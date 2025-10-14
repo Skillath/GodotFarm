@@ -17,7 +17,7 @@ public abstract partial class ViewBase<TViewModel> : Node, IView
 
     protected CancellationToken CancellationToken => _cancellationTokenSource.Token;
 
-    protected BindingContext BindingContext { get; } = new();
+    public BindingContext BindingContext { get; } = new();
 
     [Inject]
     protected void ConstructBase(TViewModel viewModel)

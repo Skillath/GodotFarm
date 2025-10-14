@@ -19,7 +19,7 @@ public sealed partial class ObservableProperty<TValue> : ObservableObject
         _value = value;
     }
     
-    private void SetValueWithoutNotifying(ref TValue value)
+    private void SetValueWithoutNotifying(in TValue value)
     {
 #pragma warning disable MVVMTK0034
         _value = value;
