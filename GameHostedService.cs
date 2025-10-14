@@ -3,31 +3,35 @@ using System.Threading.Tasks;
 using Core.Godot.DependencyInjection.Core;
 using Core.MVVM;
 using JetBrains.Annotations;
-using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using RealFriendlyFarm.Assets.Character;
+using RealFriendlyFarm.Ecs;
 
 namespace RealFriendlyFarm;
 
 [UsedImplicitly]
-public sealed class GameHostedService : HostedServiceAsyncBase, IHostedService
+public sealed class GameHostedService : HostedServiceAsyncBase
 {
+    private readonly WorldProvider _worldProvider;
     private readonly IViewFactory _factory;
     private readonly ILogger<GameHostedService> _logger;
 
     public GameHostedService(
+        WorldProvider worldProvider,
         IViewFactory factory, 
         ILogger<GameHostedService> logger)
     {
+        _worldProvider = worldProvider;
         _factory = factory;
         _logger = logger;
+        
     }
     
     public override Task StartAsync(CancellationToken cancellationToken)
     {
         _logger.LogInformation("Starting application");
         var view = _factory.CreateView<CharacterViewModel>();
-
+        
         return Task.CompletedTask;
     }
 

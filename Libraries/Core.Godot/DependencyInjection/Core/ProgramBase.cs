@@ -24,11 +24,14 @@ public abstract partial class ProgramBase : Node, IProgram
         Host = CreateHostBuilder()
             .ConfigureServices(ConfigureServices)
             .Configure(Configure)
-            .BuildAndRunConfigurableHostAsync(CancellationTokenSource.Token);
+            .BuildConfigurableHost();
 
         if (Host is null)
             throw new DependencyInjectionException(
                 "Error trying to build IHost. Maybe there is an error creating the IHostBuilder.");
+        
+        Host.RunAsync(CancellationTokenSource.Token)
+            .SafeFireAndForget();
     }
 
     public override void _ExitTree()

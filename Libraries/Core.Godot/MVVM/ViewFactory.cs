@@ -27,6 +27,7 @@ public sealed class ViewFactory : IViewFactory
         where TViewModel : IViewModel
     {
         var viewTemplate = _viewCollection.GetView<TViewModel>();
+        
         if (viewTemplate is null)
             throw new Exception($"Couldn't find view for ViewModel {nameof(TViewModel)}");
 

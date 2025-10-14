@@ -14,7 +14,7 @@ public static class HostBuilderExtensions
     public static IHostBuilder UseStartup<TStartup>(this IHostBuilder hostBuilder)
         where TStartup : class, IStartup
     {
-        return hostBuilder.ConfigureServices((hostContext, services) =>
+        return hostBuilder.ConfigureServices(static (hostContext, services) =>
         {
             var startup = Activator.CreateInstance<TStartup>();
 
@@ -28,14 +28,11 @@ public static class HostBuilderExtensions
             services.AddSingleton<IStartup>(startup);
 
             services.AddSingleton<IContainerCollection>(containerCollection);
-            services.AddSingleton<IApplicationBuilder, ApplicationBuilder>(serviceProvider => 
+            services.AddSingleton<IApplicationBuilder, ApplicationBuilder>(static serviceProvider => 
                 new ApplicationBuilder(serviceProvider));
 
             containerCollection.ConfigureServices(services);
             startup.ConfigureServices(services);
-
-            // hostBuilder.Configure(containerCollection.Configure);
-            // hostBuilder.Configure(startup.Configure);
         });
     }
 
@@ -53,17 +50,6 @@ public static class HostBuilderExtensions
         configurable.AddConfigure(configure);
 
         return hostBuilder;
-    }
-
-    public static IHost BuildAndRunConfigurableHostAsync(
-        this IHostBuilder hostBuilder, 
-        CancellationToken cancellationToken)
-    {
-        var host = hostBuilder.BuildConfigurableHost();
-
-        host.RunAsync(cancellationToken).SafeFireAndForget();
-
-        return host;
     }
 
     public static IHost BuildConfigurableHost(this IHostBuilder? hostBuilder)
