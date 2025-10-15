@@ -30,7 +30,7 @@ public sealed class GameHostedService : HostedServiceAsyncBase
     public override Task StartAsync(CancellationToken cancellationToken)
     {
         _logger.LogInformation("Starting application");
-        var view = _factory.CreateView<CharacterViewModel>();
+        var view = _factory.CreateView<WorldViewModel>();
         
         return Task.CompletedTask;
     }
