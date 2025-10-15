@@ -12,7 +12,7 @@ public sealed partial class GameContainer : ResourceContainerBase
     public override void ConfigureServices(IServiceCollection serviceCollection)
     {
         serviceCollection.AddSingleton<WorldProvider>();
-        serviceCollection.AddSingleton<ISystem, GameObjectSpawnSystem>();
+        serviceCollection.AddSingleton<ISystem, Node3dSetterSystem>();
     }
 
     public override void Configure(IApplicationBuilder app, IHostEnvironment env)

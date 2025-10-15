@@ -1,36 +1,39 @@
-using System.Linq;
 using Flecs.NET.Core;
 using Godot;
+using Microsoft.Extensions.Logging;
 using RealFriendlyFarm.Ecs.Component;
 
 namespace RealFriendlyFarm.Ecs;
 
-public sealed class GameObjectSpawnSystem : ISystem
+public sealed class Node3dSetterSystem : ISystem
 {
+    private readonly ILogger<Node3dSetterSystem> _logger;
     private readonly WorldProvider _worldProvider;
 
-    public GameObjectSpawnSystem(WorldProvider worldProvider)
+    public Node3dSetterSystem(
+        ILogger<Node3dSetterSystem> logger,
+        WorldProvider worldProvider)
     {
+        _logger = logger;
         _worldProvider = worldProvider;
     }
 
     public void Register()
     {
-        ref var world = ref _worldProvider.World;
-        var worldNode = world.Get<WorldViewComponent>().Holder;
-        var nodeCollection = world.Get<NodeCollectionComponent>().Nodes;
-        
         _worldProvider.World
             .System<
                 PositionComponent, 
                 RotationComponent, 
                 ScaleComponent>()
+            .Kind(Flecs.NET.Core.Ecs.PostUpdate)
             .Each((
                 Entity ent, 
                 ref PositionComponent positionComponent, 
                 ref RotationComponent rotationComponent,
                 ref ScaleComponent scaleComponent) =>
             {
+                var worldNode = _worldProvider.World.Get<WorldViewComponent>().Holder;
+                
                 var name = ent.Name();
 
                 for (var i = 0; i < worldNode.GetChildCount(); i++)
@@ -44,11 +47,8 @@ public sealed class GameObjectSpawnSystem : ISystem
                     childNode3D.Scale = new Vector3(scaleComponent.X, scaleComponent.Y, scaleComponent.Z);    
                     return;
                 }
-                
-                if (worldNode.GetChildren().Any(c => c.Name == name))
-                    return;
 
-                var node3d = new Node3D()
+                var node3d = new Node3D
                 {
                     Name = name,
                     Position = new Vector3(positionComponent.X, positionComponent.Y, positionComponent.Z),
