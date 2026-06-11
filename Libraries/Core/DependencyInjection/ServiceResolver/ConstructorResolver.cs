@@ -5,6 +5,7 @@ using Microsoft.Extensions.DependencyInjection;
 
 namespace Core.DependencyInjection.ServiceResolver;
 
+//TODO: Maybe we need to remove this one as it's not used.
 [UsedImplicitly]
 public sealed class ConstructorResolver : MemberResolverBase
 {
@@ -15,11 +16,13 @@ public sealed class ConstructorResolver : MemberResolverBase
     public override IEnumerable<object> ResolveMembers(object context, IEnumerable<MemberInfo> members)
     {
         var serviceProvider = ServiceProvider;
-        var resolvedConstructors = members?.Cast<ConstructorInfo>()?
-           .Where(constructorInfo => constructorInfo is not null)
-           .SelectMany(constructorInfo =>
-           {
-               var objectList = constructorInfo.GetParameters()
+        var resolvedConstructors = members?
+            .Cast<ConstructorInfo>()?
+            .Where(constructorInfo => constructorInfo is not null)
+            .SelectMany(constructorInfo =>
+            {
+               var objectList = constructorInfo
+                   .GetParameters()
                    .Select(parameter =>
                    {
                        var keyedServiceAttribute = GetKey(parameter.Member);
@@ -29,13 +32,14 @@ public sealed class ConstructorResolver : MemberResolverBase
                            ?? throw new DependencyInjectionException($"Type {parameter.ParameterType} not registered in the Service Collection");
                    })
                    .Where(service => service is not null)
+                   .Select(service => service!)
                    .ToArray();
                
                constructorInfo.Invoke(context, objectList);
 
                return objectList;
-           })
-           .ToArray();
+            })
+            .ToArray();
 
         return resolvedConstructors
             ?? throw new DependencyInjectionException($"Failed trying to cast MemberInfo into ConstructorInfo");

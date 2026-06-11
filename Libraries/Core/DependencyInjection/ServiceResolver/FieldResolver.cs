@@ -22,9 +22,9 @@ public sealed class FieldResolver : MemberResolverBase
         foreach (var fieldInfo in fieldInfos)
         {
             var key = GetKey(fieldInfo);
-            var value = key is null 
-                ? ServiceProvider.GetService(fieldInfo.FieldType) 
-                : ServiceProvider.GetRequiredKeyedService(fieldInfo.FieldType, key) 
+            var value = (key is null 
+                    ? ServiceProvider.GetService(fieldInfo.FieldType) 
+                    : ServiceProvider.GetRequiredKeyedService(fieldInfo.FieldType, key))
                 ?? throw new DependencyInjectionException($"Type {fieldInfo.FieldType} not registered in the Service Collection");
 
             fieldInfo.SetValue(context, value);

@@ -7,14 +7,10 @@ namespace RealFriendlyFarm.Ecs;
 
 public sealed class Node3dSetterSystem : ISystem
 {
-    private readonly ILogger<Node3dSetterSystem> _logger;
     private readonly WorldProvider _worldProvider;
 
-    public Node3dSetterSystem(
-        ILogger<Node3dSetterSystem> logger,
-        WorldProvider worldProvider)
+    public Node3dSetterSystem(WorldProvider worldProvider)
     {
-        _logger = logger;
         _worldProvider = worldProvider;
     }
 
@@ -22,13 +18,13 @@ public sealed class Node3dSetterSystem : ISystem
     {
         _worldProvider.World
             .System<
-                PositionComponent, 
+                Position3dComponent, 
                 RotationComponent, 
                 ScaleComponent>()
             .Kind(Flecs.NET.Core.Ecs.PostUpdate)
             .Each((
                 Entity ent, 
-                ref PositionComponent positionComponent, 
+                ref Position3dComponent positionComponent, 
                 ref RotationComponent rotationComponent,
                 ref ScaleComponent scaleComponent) =>
             {

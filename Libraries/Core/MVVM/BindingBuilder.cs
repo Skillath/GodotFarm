@@ -5,7 +5,7 @@ using Core.Observable;
 
 namespace Core.MVVM;
 
-public sealed class BindingBuilder<TViewModel, TProp>
+public struct BindingBuilder<TViewModel, TProp>
     where TViewModel : INotifyPropertyChanged
 {
     private readonly TViewModel _viewModel;
@@ -13,7 +13,9 @@ public sealed class BindingBuilder<TViewModel, TProp>
     
     private Action<TProp>? _onChanged;
 
-    public BindingBuilder(ref TViewModel viewModel, Expression<Func<TViewModel, TProp>> propExpr)
+    public BindingBuilder(
+        ref TViewModel viewModel, 
+        Expression<Func<TViewModel, TProp>> propExpr)
     {
         _viewModel = viewModel;
         _propExpr = propExpr;
@@ -27,29 +29,32 @@ public sealed class BindingBuilder<TViewModel, TProp>
     
     public void AddTo(IBindingContextHolder holder)
     {
-        if (_onChanged is null)
-            throw new Exception("");
+        var action = _onChanged;
+        var viewModel = _viewModel;
+        
+        if (action is null)
+            throw new Exception(""); //TODO: What's the exception exactly?
         
         if (_propExpr.Body is not MemberExpression { Member: PropertyInfo propertyInfo })
             throw new ArgumentException("Expression must be a simple property access", nameof(_propExpr));
         
-        
-        
         var name = propertyInfo.Name;
         
-        _onChanged.Invoke((TProp)propertyInfo.GetValue(_viewModel)!);
+        action.Invoke((TProp)propertyInfo.GetValue(_viewModel)!);
 
-        PropertyChangedEventHandler handler = (_, e) =>
+        viewModel.PropertyChanged += OnPropertyChanged;
+
+        var binding = Binding.Create(() => viewModel.PropertyChanged -= OnPropertyChanged);
+        holder.BindingContext.AddBinding(binding);
+        
+        return;
+
+        void OnPropertyChanged(object? _, PropertyChangedEventArgs e)
         {
             if (e.PropertyName != name)
                 return;
             
-            _onChanged.Invoke((TProp)propertyInfo.GetValue(_viewModel)!);
-        };
-
-        _viewModel.PropertyChanged += handler;
-
-        var binding = Binding.Create(() => _viewModel.PropertyChanged -= handler);
-        holder.BindingContext.AddBinding(binding);
+            action.Invoke((TProp)propertyInfo.GetValue(viewModel)!);
+        }
     }
 }

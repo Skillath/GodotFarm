@@ -17,10 +17,11 @@ public static class GodotHost
     {
         var hostBuilder = new ConfigurableHostBuilder()
             //.WithDefaultGameObjectFactory()
-             .ConfigureLogging(logger => 
-                 logger.ClearProviders().AddGodotLoggers());
+             .ConfigureLogging(logger => logger
+                .ClearProviders()
+                .AddGodotLoggers()
+            );
         
-
         return hostBuilder;
     }
 }

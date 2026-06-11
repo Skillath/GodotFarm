@@ -18,6 +18,7 @@ public sealed partial class GameContainer : ResourceContainerBase
     public override void Configure(IApplicationBuilder app, IHostEnvironment env)
     {
         var systems = app.ApplicationServices.GetRequiredService<IEnumerable<ISystem>>();
+        
         foreach (var system in systems)
         {
             system.Register();

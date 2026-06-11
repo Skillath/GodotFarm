@@ -14,13 +14,13 @@ public sealed class CustomAttributeServiceResolver : IServiceResolver
     {
         _serviceResolversLoader = serviceResolversLoader;
         _resolvedMembersCollection = new HashSet<object>();
+        
         _cachedResolvers = new Dictionary<Type, IDictionary<MemberTypes, MemberInfo[]>>();
     }
 
     public void Resolve(object context)
     {
-        if (context == null) 
-            throw new ArgumentNullException(nameof(context));
+        ArgumentNullException.ThrowIfNull(context);
 
         if (_resolvedMembersCollection.Contains(context))
             return;

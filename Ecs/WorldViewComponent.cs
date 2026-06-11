@@ -3,5 +3,5 @@ using Godot;
 
 namespace RealFriendlyFarm.Ecs;
 
-public record WorldViewComponent(Node Holder);
-public record NodeCollectionComponent(Dictionary<int, Node> Nodes);
+public sealed record WorldViewComponent(Node Holder);
+public sealed record NodeCollectionComponent(Dictionary<int, Node> Nodes);

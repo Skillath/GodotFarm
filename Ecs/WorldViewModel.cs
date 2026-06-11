@@ -19,7 +19,7 @@ public sealed class WorldViewModel : ViewModelBase
         for (var i = 0; i < 1000; i++)
         {
             World.Entity($"TestNode{i}")
-                .Set(new PositionComponent(0, 0, 0))
+                .Set(new Position3dComponent(0, 0, 0))
                 .Set(new RotationComponent(0, 0, 0))
                 .Set(new ScaleComponent(1, 1, 1));   
         }

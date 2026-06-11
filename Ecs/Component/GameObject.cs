@@ -1,3 +1,3 @@
 namespace RealFriendlyFarm.Ecs.Component;
 
-public record struct GameObject;
+public sealed record GameObject;

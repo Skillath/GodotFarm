@@ -1,3 +1,7 @@
 namespace RealFriendlyFarm.Ecs.Component;
 
-public record struct RotatorComponent(float X, float Y, float Z);
+public record struct RotatorComponent(
+    float VelocityX, 
+    float VelocityY, 
+    float VelocityZ
+);

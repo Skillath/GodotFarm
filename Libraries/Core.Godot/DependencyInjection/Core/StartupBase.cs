@@ -21,7 +21,7 @@ public abstract class StartupBase : IStartup
         ConfigureContainers(containerCollection);
     }
 
-    void  IStartup.ConfigureServices(IServiceCollection serviceCollection)
+    void IStartup.ConfigureServices(IServiceCollection serviceCollection)
     {
         ConfigureServices(serviceCollection);
     }

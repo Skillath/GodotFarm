@@ -15,7 +15,8 @@ public sealed class MethodResolver : MemberResolverBase
     public override IEnumerable<object> ResolveMembers(object context, IEnumerable<MemberInfo> members)
     {
         var serviceProvider = ServiceProvider;
-        var resolvedMembers = members?.Cast<MethodInfo>()?
+        var resolvedMembers = members?
+            .Cast<MethodInfo>()?
             .Where(methodInfo => methodInfo is not null)
             .SelectMany(methodInfo =>
             {
@@ -29,12 +30,12 @@ public sealed class MethodResolver : MemberResolverBase
                               ?? throw new DependencyInjectionException($"Type {parameter.ParameterType} not registered in the Service Collection");
                     })
                     .Where(service => service is not null)
+                    .Select(service => service!)
                     .ToArray();
 
                 methodInfo?.Invoke(context, objectList);
                 return objectList;
-            })
-            .ToHashSet();
+            });
 
        return resolvedMembers 
               ?? throw new DependencyInjectionException($"Failed trying to cast MemberInfo into MethodInfo");
