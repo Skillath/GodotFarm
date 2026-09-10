@@ -44,12 +44,12 @@ addons/SagardoStudios.Foundation/
   Foundation.props                        # consumer imports this ONE line into game .csproj
   installer/FoundationInstaller.cs        # C# [Tool] EditorPlugin: sln wiring
   Directory.Build.props                   # shared Version / metadata / GodotSharpVersion default
-  Core~/Core.csproj                       # Godot-ignored (~), Microsoft.NET.Sdk, packable
-  Core.Godot~/Core.Godot.csproj           # Godot-ignored (~), Microsoft.NET.Sdk + GodotSharp
+  .Core/Core.csproj                       # dot-prefixed (Godot + MSBuild ignore), packable
+  .Core.Godot/Core.Godot.csproj           # dot-prefixed, Microsoft.NET.Sdk + GodotSharp
   README.md                               # both install routes
 ```
 
-Directories ending in `~` are ignored by Godot's filesystem scanner. This keeps the addon's `.cs` out of `res://` script registration while still living physically inside the addon folder for git/update simplicity. The `.cs.uid` files under the C# projects are removed (they are no longer Godot resources).
+Directories starting with `.` are ignored by Godot's filesystem scanner **and** by the default MSBuild compile glob (`**/.*/**`). This keeps the addon's project sources out of `res://` script registration and, crucially, out of a fresh game project's main-assembly compile, so a freshly copied addon builds with only `installer/FoundationInstaller.cs` until `Foundation.props` wires the two projects in. Unlike `~` (a Godot-only ignore), a dot-prefix is also invisible to MSBuild — this is what makes the addon bootstrap without any manual `.csproj` edit. The `.cs.uid` files under the C# projects are removed (they are no longer Godot resources).
 
 ## 6. Source install
 
@@ -66,23 +66,16 @@ Contents:
 ```xml
 <Project>
   <ItemGroup>
-    <ProjectReference Include="$(MSBuildThisFileDirectory)Core~\Core.csproj"
+    <ProjectReference Include="$(MSBuildThisFileDirectory).Core\Core.csproj"
                       AdditionalProperties="GodotSharpVersion=$(GodotSharpVersion)" />
-    <ProjectReference Include="$(MSBuildThisFileDirectory)Core.Godot~\Core.Godot.csproj"
+    <ProjectReference Include="$(MSBuildThisFileDirectory).Core.Godot\Core.Godot.csproj"
                       AdditionalProperties="GodotSharpVersion=$(GodotSharpVersion)" />
-  </ItemGroup>
-  <ItemGroup>
-    <Compile Remove="$(MSBuildThisFileDirectory)Core~\**\*.cs" />
-    <Compile Remove="$(MSBuildThisFileDirectory)Core.Godot~\**\*.cs" />
-    <EmbeddedResource Remove="$(MSBuildThisFileDirectory)Core~\**" />
-    <EmbeddedResource Remove="$(MSBuildThisFileDirectory)Core.Godot~\**" />
   </ItemGroup>
 </Project>
 ```
 
 - `AdditionalProperties` forwards the consumer's `GodotSharpVersion` into the referenced project builds as a global property.
-- The `Compile`/`EmbeddedResource` removals prevent the game project from double-compiling the addon sources (the projects are referenced instead).
-- If absolute globs in `Remove` misbehave on a given MSBuild, fall back to `DefaultItemExcludes`.
+- No `Compile Remove` is needed: `.Core` / `.Core.Godot` are dot-prefixed and the default MSBuild glob already ignores them.
 
 ### 6.2 Godot version override
 
@@ -104,7 +97,7 @@ Contents:
     <PackageReference Include="Microsoft.Extensions.Logging.Abstractions" Version="9.0.9" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Core~\Core.csproj" />
+    <ProjectReference Include="..\.Core\Core.csproj" />
   </ItemGroup>
 </Project>
 ```
@@ -134,7 +127,7 @@ Consumer override: set `<GodotSharpVersion>4.6.3</GodotSharpVersion>` in their g
 
 ## 7. sln wiring — C# installer plugin
 
-Godot requires C# editor plugins to live in the **main** assembly. The addon's `Core~` / `Core.Godot~` sources are excluded from the game compile, so `Foundation.props` excludes only those two folders and leaves `installer/FoundationInstaller.cs` to be globbed into the game (wrapped in `#if TOOLS`). The NuGet route ships no plugin source; `PackageReference` needs no solution wiring.
+Godot requires C# editor plugins to live in the **main** assembly. The addon's `.Core` / `.Core.Godot` sources are dot-prefixed, so they are hidden from Godot and from the default MSBuild compile glob; `installer/FoundationInstaller.cs` is the only addon `.cs` the game globs (wrapped in `#if TOOLS`). Because the installer references nothing from `Core`, a freshly copied addon builds and the plugin loads **before** `Foundation.props` is imported — which is what lets the plugin wire itself in. The NuGet route ships no plugin source; `PackageReference` needs no solution wiring.
 
 `plugin.cfg`:
 
@@ -149,16 +142,19 @@ script="installer/FoundationInstaller.cs"
 
 `installer/FoundationInstaller.cs` — `[Tool] partial class FoundationInstaller : EditorPlugin` (inside `#if TOOLS`):
 
-- On `_EnterTree()` and from a menu item, wire the solution:
-  1. Resolve the game assembly name from `ProjectSettings` (`dotnet/project/assembly_name`) and locate `<name>.sln` / `<name>.csproj` at `res://` root.
-  2. Run `OS.Execute("dotnet", ["sln", <sln>, "add", <Core.csproj>, <Core.Godot.csproj>], output, true)`.
-  3. Report success/failure to the Output panel and a dialog.
-- Idempotent: only adds projects not already listed (`dotnet sln list` first, or tolerate "already" output).
-- Does **not** edit the `.csproj`; the props import remains a manual one-liner.
-- Handles the "no C# solution yet" case with a clear message pointing at `Project ▸ Tools ▸ C# ▸ Create C# solution`.
+- Adds a **dock** (`EditorDock`, `LayoutKey`/`Title = "SagardoStudios.Foundation"`, `DefaultSlot = RightUl`) containing a **Regenerate C# solution** button and a status label. Added with `AddDock`, removed with `RemoveDock` + `QueueFree` in `_ExitTree`.
+- Also exposes a tool-menu item (**Project ▸ SagardoStudios.Foundation: Regenerate C# solution**).
+- `RegenerateSolution()`:
+  1. Resolve the game assembly name from `ProjectSettings` (`dotnet/project/assembly_name`, falling back to `application/config/name`) and locate `<name>.sln` / `<name>.csproj` at `res://` root. If missing, status + dialog point at `Project ▸ Tools ▸ C# ▸ Create C# solution`.
+  2. Ensure the `.csproj` contains the `<Import>` of `Foundation.props` using `System.Xml.Linq` (idempotent, formatting preserved via `LoadOptions.PreserveWhitespace` / `SaveOptions.DisableFormatting`).
+  3. Ensure `.Core` / `.Core.Godot` are in the `.sln` via `dotnet sln list` + `dotnet sln add` (idempotent).
+  4. Write the result to the dock status label and the Output panel.
+- Does **not** inject `Compile Remove` groups; the dot-prefix hides the project folders from the default glob.
 - The class name has no dot and matches the file name, so Godot's `ScriptPathAttribute` maps `res://addons/SagardoStudios.Foundation/installer/FoundationInstaller.cs` to the type.
 
-Rationale: `dotnet sln add` is the standard, robust way to edit a solution. Hand-parsing the `.sln` format is avoided.
+Rationale: `dotnet sln add` is the standard, robust way to edit a solution; hand-parsing `.sln` is avoided. `XDocument` is the standard, robust way to edit the `.csproj`.
+
+Bootstrap: the plugin is C# in the main assembly, but because `.Core` / `.Core.Godot` are dot-prefixed the game builds with only the installer — so the plugin loads on a freshly copied addon and can add the `<Import>` itself. Godot's own **Create C# solution** regenerates the `.csproj` and wipes custom content; press **Regenerate C# solution** afterwards to restore the import (the button is the non-destructive alternative).
 
 ## 8. NuGet install
 
@@ -170,14 +166,14 @@ Rationale: `dotnet sln add` is the standard, robust way to edit a solution. Hand
 <PackageReference Include="SagardoStudios.Foundation.Core.Godot" Version="0.1.0" />
 ```
 
-- Local feed for development: `dotnet pack addons/SagardoStudios.Foundation/Core.Godot~/Core.Godot.csproj -c Release -o artifacts`, then a `nuget.config` pointing at `artifacts/` (or `dotnet nuget add source`).
+- Local feed for development: `dotnet pack addons/SagardoStudios.Foundation/.Core.Godot/Core.Godot.csproj -c Release -o artifacts`, then a `nuget.config` pointing at `artifacts/` (or `dotnet nuget add source`).
 - The package's `GodotSharp` dependency is pinned to `$(GodotSharpVersion)` at pack time. Consumers on a different Godot minor may need to align versions; documented as a compatibility note.
 
 ## 9. Cleanup / migration
 
 - Delete `Core/SagardoStudios.Foundation.cs` — it references Godot inside the Godot-free `Core`, uses an invalid class name (`SagardoStudios.Foundation` contains a dot), and its path disagrees with `plugin.cfg`.
-- Move `Core/` → `Core~/` and `Core.Godot/` → `Core.Godot~/`.
-- Remove `.uid` files under the moved C# projects; remove `Core.Godot~/.godot` build artifacts.
+- Move `Core/` → `.Core/` and `Core.Godot/` → `.Core.Godot/` (dot-prefixed; hidden from Godot and the default MSBuild glob).
+- Remove `.uid` files under the moved C# projects; remove `.Core.Godot/.godot` build artifacts.
 - Update `RealFriendlyFarm.csproj` and `RealFriendlyFarm.sln` to use the new route (replace manual `ProjectReference`s with the `Foundation.props` import), validating the consumer experience on the current game.
 
 ## 10. Risks
@@ -185,8 +181,8 @@ Rationale: `dotnet sln add` is the standard, robust way to edit a solution. Hand
 | Risk | Mitigation |
 |------|------------|
 | `Microsoft.NET.Sdk` project lacks Godot SDK behaviors (defines, generators, output paths) | Add `GODOT;TOOLS`, `Godot.SourceGenerators`, `GodotProjectDir`; verify build + runtime. |
-| `~` folder breaks tooling or packaging | `~` is a Godot ignore convention; MSBuild/NuGet handle it. Verified by build/pack. |
-| Absolute glob in `Compile Remove` unsupported | Fallback to `DefaultItemExcludes`. |
+| `.` folder breaks tooling or packaging | Dot-prefix is ignored by Godot and the default MSBuild glob; MSBuild/NuGet handle dot-dirs. Verified by build/pack. |
+| Fresh copy fails to build (addon `.cs` globbed into main) | `.Core`/`.Core.Godot` dot-prefixed so the default glob skips them; installer compiles standalone. |
 | Source-addon consumers on a different Godot minor | `GodotSharpVersion` property override; document compatibility. |
 | `dotnet` not on PATH when the plugin runs | Detect and show a clear error; sln wiring stays optional (build still works without it). |
 | Multi-assembly script discovery | Addon exposes abstract bases/services only; documented. |
@@ -194,13 +190,13 @@ Rationale: `dotnet sln add` is the standard, robust way to edit a solution. Hand
 ## 11. Verification
 
 - `dotnet build RealFriendlyFarm.sln` succeeds after migration.
-- `dotnet pack addons/SagardoStudios.Foundation/Core.Godot~/Core.Godot.csproj -c Release -o artifacts` produces `SagardoStudios.Foundation.Core` and `SagardoStudios.Foundation.Core.Godot` `.nupkg`.
+- `dotnet pack addons/SagardoStudios.Foundation/.Core.Godot/Core.Godot.csproj -c Release -o artifacts` produces `SagardoStudios.Foundation.Core` and `SagardoStudios.Foundation.Core.Godot` `.nupkg`.
 - (Manual, no Godot binary in this environment) Enable the plugin in the editor; confirm sln gains both projects; confirm no C# script-scan errors for addon sources.
 - Optional: throwaway consumer project that installs the local package and builds.
 
 ## 12. Phasing (single plan, ordered)
 
-1. Restructure folders (`Core~`, `Core.Godot~`), delete broken plugin `.cs`, drop `.uid`.
+1. Restructure folders (`.Core`, `.Core.Godot`), delete broken plugin `.cs`, drop `.uid`.
 2. Add `Directory.Build.props`; convert `Core.Godot` to `Microsoft.NET.Sdk` + GodotSharp.
 3. Add `Foundation.props`; rewire `RealFriendlyFarm.csproj`; verify build.
 4. Add `installer/FoundationInstaller.cs` + `plugin.cfg`; wire sln.
