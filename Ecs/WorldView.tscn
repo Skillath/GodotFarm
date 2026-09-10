@@ -1,6 +1,6 @@
-[gd_scene load_steps=2 format=3 uid="uid://c2i5nmo7pioml"]
+[gd_scene format=3 uid="uid://c2i5nmo7pioml"]
 
 [ext_resource type="Script" uid="uid://bxwegsvkvdclf" path="res://Ecs/WorldView.cs" id="1_1djos"]
 
-[node name="WorldView" type="Node3D"]
+[node name="WorldView" type="Node3D" unique_id=414171306]
 script = ExtResource("1_1djos")

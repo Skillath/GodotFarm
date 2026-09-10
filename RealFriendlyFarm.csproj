@@ -1,4 +1,4 @@
-<Project Sdk="Godot.NET.Sdk/4.6.0">
+<Project Sdk="Godot.NET.Sdk/4.7.2">
   <PropertyGroup>
     <TargetFramework>net8.0</TargetFramework>
     <Nullable>enable</Nullable>
@@ -14,13 +14,15 @@
     <PackageReference Include="Microsoft.Extensions.Logging.Abstractions" Version="9.0.9" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Remove="Libraries\**" />
+    <Compile Remove="addons\**" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Remove="Libraries\**" />
+    <EmbeddedResource Remove="addons\**" />
   </ItemGroup>
+
+  <Import Project="addons\SagardoStudios.Foundation\Foundation.props" />
+
   <ItemGroup>
-    <ProjectReference Include="Libraries\Core.Godot\Core.Godot.csproj" />
-    <ProjectReference Include="Libraries\Core\Core.csproj" />
+    <Compile Include="addons\SagardoStudios.Foundation\installer\**\*.cs" />
   </ItemGroup>
 </Project>

@@ -8,16 +8,12 @@
 
 config_version=5
 
-[animation]
-
-compatibility/default_parent_skeleton_in_mesh_instance_3d=true
-
 [application]
 
 config/name="RealFriendlyFarm"
 config/description="No Description"
 run/main_scene="res://Startup.tscn"
-config/features=PackedStringArray("4.6", "C#", "GL Compatibility")
+config/features=PackedStringArray("4.7", "C#", "GL Compatibility")
 config/icon="res://icon.svg"
 
 [autoload]
@@ -30,7 +26,7 @@ project/assembly_name="RealFriendlyFarm"
 
 [editor_plugins]
 
-enabled=PackedStringArray("res://addons/phantom_camera/plugin.cfg")
+enabled=PackedStringArray("res://addons/SagardoStudios.Foundation/plugin.cfg", "res://addons/phantom_camera/plugin.cfg")
 
 [input]
 

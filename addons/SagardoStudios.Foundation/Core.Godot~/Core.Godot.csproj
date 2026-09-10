@@ -1,0 +1,22 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+    <PropertyGroup>
+        <TargetFramework>net8.0</TargetFramework>
+        <PackageId>SagardoStudios.Foundation.Core.Godot</PackageId>
+        <Description>Godot integration for SagardoStudios.Foundation: MVVM view bases, DI host, and logging.</Description>
+
+        <DefineConstants>GODOT;TOOLS;$(DefineConstants)</DefineConstants>
+        <GodotProjectDir Condition="'$(GodotProjectDir)' == ''">$([MSBuild]::GetDirectoryNameOfFileAbove('$(MSBuildThisFileDirectory)', 'project.godot'))</GodotProjectDir>
+    </PropertyGroup>
+
+    <ItemGroup>
+        <PackageReference Include="GodotSharp" Version="$(GodotSharpVersion)" />
+        <PackageReference Include="Godot.SourceGenerators" Version="$(GodotSharpVersion)" PrivateAssets="all" />
+        <PackageReference Include="Microsoft.Extensions.Logging.Abstractions" Version="9.0.9" />
+    </ItemGroup>
+
+    <ItemGroup>
+        <ProjectReference Include="..\Core~\Core.csproj" />
+    </ItemGroup>
+
+</Project>

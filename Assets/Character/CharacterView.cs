@@ -12,7 +12,7 @@ public sealed partial class CharacterView : ViewBase<CharacterViewModel>
     protected override void Bind()
     {
         ViewModel
-            .BindTo(viewModel => viewModel.Position)
+            .Bind(viewModel => viewModel.Position)
             .WithMethodConverter(position => _object.Position = position)
             .AddTo(this);
     }
@@ -20,7 +20,7 @@ public sealed partial class CharacterView : ViewBase<CharacterViewModel>
     public override void _Process(double delta)
     {
         base._Process(delta);
-
+        
         var inputDirection = Input.GetVector("left", "right", "up", "down");
         var velocity = new Vector3(inputDirection.X, inputDirection.Y, 0);
 

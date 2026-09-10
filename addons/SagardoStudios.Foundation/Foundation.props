@@ -1,0 +1,21 @@
+<Project>
+
+  <!-- Import this file from your game's .csproj:
+       <Import Project="addons/SagardoStudios.Foundation/Foundation.props" />
+       Optionally set <GodotSharpVersion> in your .csproj to match your Godot version. -->
+
+  <ItemGroup>
+    <ProjectReference Include="$(MSBuildThisFileDirectory)Core~\Core.csproj"
+                      AdditionalProperties="GodotSharpVersion=$(GodotSharpVersion)" />
+    <ProjectReference Include="$(MSBuildThisFileDirectory)Core.Godot~\Core.Godot.csproj"
+                      AdditionalProperties="GodotSharpVersion=$(GodotSharpVersion)" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Compile Remove="$(MSBuildThisFileDirectory)Core~\**\*.cs" />
+    <Compile Remove="$(MSBuildThisFileDirectory)Core.Godot~\**\*.cs" />
+    <EmbeddedResource Remove="$(MSBuildThisFileDirectory)Core~\**" />
+    <EmbeddedResource Remove="$(MSBuildThisFileDirectory)Core.Godot~\**" />
+  </ItemGroup>
+
+</Project>

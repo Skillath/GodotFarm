@@ -40,9 +40,9 @@ Godot only auto-discovers C# scripts from the **main** assembly. Types in a refe
 
 ```
 addons/SagardoStudios.Foundation/
-  plugin.cfg                              # script = "installer/foundation_installer.gd"
+  plugin.cfg                              # script = "installer/FoundationInstaller.cs"
   Foundation.props                        # consumer imports this ONE line into game .csproj
-  installer/foundation_installer.gd       # GDScript @tool EditorPlugin: sln wiring
+  installer/FoundationInstaller.cs        # C# [Tool] EditorPlugin: sln wiring
   Directory.Build.props                   # shared Version / metadata / GodotSharpVersion default
   Core~/Core.csproj                       # Godot-ignored (~), Microsoft.NET.Sdk, packable
   Core.Godot~/Core.Godot.csproj           # Godot-ignored (~), Microsoft.NET.Sdk + GodotSharp
@@ -72,8 +72,10 @@ Contents:
                       AdditionalProperties="GodotSharpVersion=$(GodotSharpVersion)" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Remove="$(MSBuildThisFileDirectory)**" />
-    <EmbeddedResource Remove="$(MSBuildThisFileDirectory)**" />
+    <Compile Remove="$(MSBuildThisFileDirectory)Core~\**\*.cs" />
+    <Compile Remove="$(MSBuildThisFileDirectory)Core.Godot~\**\*.cs" />
+    <EmbeddedResource Remove="$(MSBuildThisFileDirectory)Core~\**" />
+    <EmbeddedResource Remove="$(MSBuildThisFileDirectory)Core.Godot~\**" />
   </ItemGroup>
 </Project>
 ```
@@ -130,7 +132,9 @@ Contents:
 
 Consumer override: set `<GodotSharpVersion>4.6.3</GodotSharpVersion>` in their game `.csproj` (or a game-root `Directory.Build.props`). It is forwarded by `Foundation.props`.
 
-## 7. sln wiring — GDScript installer plugin
+## 7. sln wiring — C# installer plugin
+
+Godot requires C# editor plugins to live in the **main** assembly. The addon's `Core~` / `Core.Godot~` sources are excluded from the game compile, so `Foundation.props` excludes only those two folders and leaves `installer/FoundationInstaller.cs` to be globbed into the game (wrapped in `#if TOOLS`). The NuGet route ships no plugin source; `PackageReference` needs no solution wiring.
 
 `plugin.cfg`:
 
@@ -140,18 +144,19 @@ name="SagardoStudios.Foundation"
 description="Foundation for Godot C# projects (MVVM, DI, logging)."
 author="Xabier Gonzalez Goienetxea"
 version="0.1"
-script="installer/foundation_installer.gd"
+script="installer/FoundationInstaller.cs"
 ```
 
-`installer/foundation_installer.gd` — `@tool extends EditorPlugin`:
+`installer/FoundationInstaller.cs` — `[Tool] partial class FoundationInstaller : EditorPlugin` (inside `#if TOOLS`):
 
-- On `_enter_tree()` and from a menu item, wire the solution:
+- On `_EnterTree()` and from a menu item, wire the solution:
   1. Resolve the game assembly name from `ProjectSettings` (`dotnet/project/assembly_name`) and locate `<name>.sln` / `<name>.csproj` at `res://` root.
-  2. Run `OS.execute("dotnet", ["sln", <sln>, "add", <Core.csproj>, <Core.Godot.csproj>], output, true)`.
+  2. Run `OS.Execute("dotnet", ["sln", <sln>, "add", <Core.csproj>, <Core.Godot.csproj>], output, true)`.
   3. Report success/failure to the Output panel and a dialog.
 - Idempotent: only adds projects not already listed (`dotnet sln list` first, or tolerate "already" output).
 - Does **not** edit the `.csproj`; the props import remains a manual one-liner.
 - Handles the "no C# solution yet" case with a clear message pointing at `Project ▸ Tools ▸ C# ▸ Create C# solution`.
+- The class name has no dot and matches the file name, so Godot's `ScriptPathAttribute` maps `res://addons/SagardoStudios.Foundation/installer/FoundationInstaller.cs` to the type.
 
 Rationale: `dotnet sln add` is the standard, robust way to edit a solution. Hand-parsing the `.sln` format is avoided.
 
@@ -198,6 +203,6 @@ Rationale: `dotnet sln add` is the standard, robust way to edit a solution. Hand
 1. Restructure folders (`Core~`, `Core.Godot~`), delete broken plugin `.cs`, drop `.uid`.
 2. Add `Directory.Build.props`; convert `Core.Godot` to `Microsoft.NET.Sdk` + GodotSharp.
 3. Add `Foundation.props`; rewire `RealFriendlyFarm.csproj`; verify build.
-4. Add `installer/foundation_installer.gd` + `plugin.cfg`; wire sln.
+4. Add `installer/FoundationInstaller.cs` + `plugin.cfg`; wire sln.
 5. Add NuGet metadata; pack to `artifacts/`; verify packages and dependencies.
 6. Write `README.md` (both routes) and compatibility notes.

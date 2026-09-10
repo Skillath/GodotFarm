@@ -1,4 +1,4 @@
-[gd_resource type="Resource" load_steps=4 format=3 uid="uid://b6nn4ktlrsurb"]
+[gd_resource type="Resource" format=3 uid="uid://b6nn4ktlrsurb"]
 
 [ext_resource type="PackedScene" uid="uid://dwcw4tq4rc53d" path="res://Assets/Character/CharacterView.tscn" id="1_amg0p"]
 [ext_resource type="PackedScene" uid="uid://c2i5nmo7pioml" path="res://Ecs/WorldView.tscn" id="2_egl65"]
