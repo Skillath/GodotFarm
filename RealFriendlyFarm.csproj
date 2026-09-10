@@ -9,20 +9,8 @@
   <ItemGroup>
     <PackageReference Include="Flecs.NET.Release" Version="4.0.3" />
     <PackageReference Include="JetBrains.Annotations" Version="2025.2.2" />
-    <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="9.0.9" />
-    <PackageReference Include="Microsoft.Extensions.Hosting" Version="9.0.9" />
-    <PackageReference Include="Microsoft.Extensions.Logging.Abstractions" Version="9.0.9" />
-  </ItemGroup>
-  <ItemGroup>
-    <Compile Remove="addons\**" />
-  </ItemGroup>
-  <ItemGroup>
-    <EmbeddedResource Remove="addons\**" />
   </ItemGroup>
 
   <Import Project="addons\SagardoStudios.Foundation\Foundation.props" />
 
-  <ItemGroup>
-    <Compile Include="addons\SagardoStudios.Foundation\installer\**\*.cs" />
-  </ItemGroup>
 </Project>

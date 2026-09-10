@@ -1,0 +1,25 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+    <PropertyGroup>
+        <TargetFramework>net8.0</TargetFramework>
+        <PackageId>SagardoGames.Foundations.Core</PackageId>
+        <Description>Godot-agnostic MVVM, observable, and dependency-injection abstractions for SagardoGames.Foundations.</Description>
+    </PropertyGroup>
+
+    <PropertyGroup>
+        <DefaultItemExcludes>$(DefaultItemExcludes);**\*.uid</DefaultItemExcludes>
+        
+    </PropertyGroup>
+
+    <ItemGroup>
+        <PackageReference Include="JetBrains.Annotations" Version="2026.2.0" />
+        <PackageReference Include="CommunityToolkit.Mvvm" Version="8.4.2" />
+        <PackageReference Include="AsyncAwaitBestPractices" Version="10.0.0" />
+        <PackageReference Include="AsyncAwaitBestPractices.MVVM" Version="10.0.0" />
+        <PackageReference Include="Microsoft.Extensions.DependencyInjection.Abstractions" Version="10.0.12" />
+        <PackageReference Include="Microsoft.Extensions.Hosting" Version="10.0.12" />
+        <PackageReference Include="Microsoft.Extensions.Hosting.Abstractions" Version="10.0.12" />
+        <PackageReference Include="Microsoft.Extensions.Logging.Abstractions" Version="10.0.12" />
+    </ItemGroup>
+    
+</Project>

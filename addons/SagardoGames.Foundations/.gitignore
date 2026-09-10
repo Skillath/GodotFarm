@@ -1,0 +1,16 @@
+# .NET / C# build output
+bin/
+obj/
+*.user
+*.csproj.user
+*.sln.user
+mono_crash.*.json
+
+# IDEs
+.idea/
+.vs/
+.vscode/
+
+# Godot editor data (if the addon is opened as a project)
+.godot/
+export/

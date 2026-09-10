@@ -1,0 +1,17 @@
+<Project>
+
+  <!-- Import this file from your game's .csproj:
+       <Import Project="addons/SagardoGames.Foundations/Foundation.props" />
+       Optionally set <GodotSharpVersion> in your .csproj to match your Godot version.
+
+       .Core / .Core.Godot are dot-prefixed: hidden from Godot and from the default MSBuild
+       compile glob, so a project builds them only through these references. -->
+
+  <ItemGroup>
+    <ProjectReference Include="$(MSBuildThisFileDirectory).Core\Core.csproj"
+                      AdditionalProperties="GodotSharpVersion=$(GodotSharpVersion)" />
+    <ProjectReference Include="$(MSBuildThisFileDirectory).Core.Godot\Core.Godot.csproj"
+                      AdditionalProperties="GodotSharpVersion=$(GodotSharpVersion)" />
+  </ItemGroup>
+
+</Project>
